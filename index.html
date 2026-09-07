@@ -1,54 +1,99 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>PlaySphere | Sports Community</title>
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
+
 
 <body>
 
-    <!-- Background decorations -->
+
+    <!-- Background -->
+
     <div class="background">
 
         <div class="stadium-glow"></div>
 
         <div class="field-lines">
+
             <div class="center-circle"></div>
+
             <div class="center-line"></div>
+
         </div>
+
 
         <div class="sports-icons">
-            <span class="sport-icon football">⚽</span>
-            <span class="sport-icon basketball">🏀</span>
-            <span class="sport-icon trophy">🏆</span>
-            <span class="sport-icon medal">🏅</span>
+
+            <span class="sport-icon football">
+                ⚽
+            </span>
+
+            <span class="sport-icon basketball">
+                🏀
+            </span>
+
+            <span class="sport-icon trophy">
+                🏆
+            </span>
+
+            <span class="sport-icon medal">
+                🏅
+            </span>
+
         </div>
 
-        <div class="speed-lines"></div>
     </div>
 
 
-    <!-- Main page -->
+
+    <!-- Main -->
+
     <main class="page-container">
 
-        <!-- Left branding section -->
+
+        <!-- LEFT SIDE -->
+
         <section class="hero-section">
 
+
             <div class="brand">
-                <div class="brand-icon">⚡</div>
-                <span>PLAY<span>SPHERE</span></span>
+
+                <div class="brand-icon">
+                    ⚡
+                </div>
+
+                <span>
+                    PLAY<span>SPHERE</span>
+                </span>
+
             </div>
+
+
 
             <div class="hero-content">
 
@@ -56,82 +101,136 @@
                     YOUR GAME. YOUR COMMUNITY.
                 </p>
 
+
                 <h1>
+
                     PLAY HARD.<br>
+
                     <span>CONNECT</span><br>
+
                     HARDER.
+
                 </h1>
 
+
                 <p class="hero-description">
-                    Join a community built for people who live and breathe sports.
-                    Find teammates, discover events, share your achievements,
-                    and take your game to the next level.
+
+                    Join a community built for people
+                    who live and breathe sports.
+
+                    Find teammates, discover events,
+                    share your achievements, and take
+                    your game to the next level.
+
                 </p>
 
+
                 <div class="sports-tags">
+
                     <span>⚽ Football</span>
+
                     <span>🏀 Basketball</span>
+
                     <span>🏏 Cricket</span>
+
                     <span>🏸 Badminton</span>
+
                 </div>
 
             </div>
 
+
             <div class="hero-footer">
+
                 <span>BUILT FOR ATHLETES</span>
+
                 <span>•</span>
+
                 <span>CONNECTED BY SPORT</span>
+
             </div>
+
 
         </section>
 
 
-        <!-- Authentication section -->
+
+        <!-- AUTH -->
+
         <section class="auth-section">
+
 
             <div class="auth-card">
 
-                <!-- Card header -->
+
+                <!-- Header -->
+
                 <div class="auth-header">
 
+
                     <div class="mobile-brand">
-                        <div class="brand-icon">⚡</div>
-                        <span>PLAY<span>SPHERE</span></span>
+
+                        <div class="brand-icon">
+                            ⚡
+                        </div>
+
+                        <span>
+                            PLAY<span>SPHERE</span>
+                        </span>
+
                     </div>
 
-                    <h2 id="formTitle">Welcome Back</h2>
+
+                    <h2 id="formTitle">
+                        Welcome Back
+                    </h2>
+
 
                     <p id="formSubtitle">
                         Login to continue your sports journey.
                     </p>
 
+
                 </div>
 
 
-                <!-- Switch buttons -->
+
+                <!-- Tabs -->
+
                 <div class="auth-tabs">
 
                     <button
                         class="tab active"
                         id="loginTab"
                         type="button">
+
                         LOGIN
+
                     </button>
+
 
                     <button
                         class="tab"
                         id="signupTab"
                         type="button">
+
                         SIGN UP
+
                     </button>
+
 
                     <div class="tab-indicator"></div>
 
                 </div>
 
 
-                <!-- LOGIN FORM -->
-                <form id="loginForm" class="auth-form active-form">
+
+                <!-- LOGIN -->
+
+                <form
+                    id="loginForm"
+                    class="auth-form active-form">
+
 
                     <div class="input-group">
 
@@ -139,19 +238,25 @@
                             EMAIL
                         </label>
 
+
                         <div class="input-wrapper">
 
-                            <span class="input-icon">✉</span>
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
 
                             <input
                                 type="email"
                                 id="loginEmail"
                                 placeholder="Enter your email"
+                                autocomplete="email"
                                 required>
 
                         </div>
 
                     </div>
+
 
 
                     <div class="input-group">
@@ -160,21 +265,29 @@
                             PASSWORD
                         </label>
 
+
                         <div class="input-wrapper">
 
-                            <span class="input-icon">🔒</span>
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
 
                             <input
                                 type="password"
                                 id="loginPassword"
                                 placeholder="Enter your password"
+                                autocomplete="current-password"
                                 required>
+
 
                             <button
                                 type="button"
                                 class="password-toggle"
                                 data-target="loginPassword">
+
                                 👁
+
                             </button>
 
                         </div>
@@ -182,7 +295,9 @@
                     </div>
 
 
+
                     <div class="form-options">
+
 
                         <label class="remember">
 
@@ -194,48 +309,84 @@
 
                         </label>
 
-                        <a href="#" class="forgot">
+
+                        <a href="#"
+                           class="forgot">
+
                             Forgot Password?
+
                         </a>
+
 
                     </div>
 
 
-                    <button type="submit" class="submit-btn">
 
-                        <span>ENTER THE ARENA</span>
+                    <button
+                        type="submit"
+                        class="submit-btn">
 
-                        <span class="arrow">→</span>
+                        <span>
+                            ENTER THE ARENA
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
 
                     </button>
 
 
+
                     <div class="divider">
-                        <span>OR CONTINUE WITH</span>
+
+                        <span>
+                            OR CONTINUE WITH
+                        </span>
+
                     </div>
+
 
 
                     <div class="social-buttons">
 
-                        <button type="button" class="social-btn">
+                        <button
+                            type="button"
+                            class="social-btn">
+
                             <strong>G</strong>
+
                             Google
+
                         </button>
 
-                        <button type="button" class="social-btn">
+
+                        <button
+                            type="button"
+                            class="social-btn">
+
                             <strong>f</strong>
+
                             Facebook
+
                         </button>
 
                     </div>
 
+
                 </form>
 
 
-                <!-- SIGN UP FORM -->
-                <form id="signupForm" class="auth-form">
+
+                <!-- SIGN UP -->
+
+                <form
+                    id="signupForm"
+                    class="auth-form">
+
 
                     <div class="name-row">
+
 
                         <div class="input-group">
 
@@ -243,19 +394,25 @@
                                 FIRST NAME
                             </label>
 
+
                             <div class="input-wrapper">
 
-                                <span class="input-icon">👤</span>
+                                <span class="input-icon">
+                                    👤
+                                </span>
+
 
                                 <input
                                     type="text"
                                     id="firstName"
                                     placeholder="First name"
+                                    autocomplete="given-name"
                                     required>
 
                             </div>
 
                         </div>
+
 
 
                         <div class="input-group">
@@ -264,19 +421,23 @@
                                 LAST NAME
                             </label>
 
+
                             <div class="input-wrapper">
 
                                 <input
                                     type="text"
                                     id="lastName"
                                     placeholder="Last name"
+                                    autocomplete="family-name"
                                     required>
 
                             </div>
 
                         </div>
 
+
                     </div>
+
 
 
                     <div class="input-group">
@@ -285,14 +446,19 @@
                             EMAIL
                         </label>
 
+
                         <div class="input-wrapper">
 
-                            <span class="input-icon">✉</span>
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
 
                             <input
                                 type="email"
                                 id="signupEmail"
                                 placeholder="Enter your email"
+                                autocomplete="email"
                                 required>
 
                         </div>
@@ -300,33 +466,69 @@
                     </div>
 
 
+
                     <div class="input-group">
 
                         <label for="sport">
-
                             FAVOURITE SPORT
-
                         </label>
+
 
                         <div class="input-wrapper">
 
-                            <span class="input-icon">🏆</span>
+                            <span class="input-icon">
+                                🏆
+                            </span>
 
-                            <select id="sport" required>
 
-                                <option value="" disabled selected>
+                            <select
+                                id="sport"
+                                required>
+
+                                <option
+                                    value=""
+                                    disabled
+                                    selected>
+
                                     Select your sport
+
                                 </option>
 
-                                <option>Football</option>
-                                <option>Cricket</option>
-                                <option>Basketball</option>
-                                <option>Badminton</option>
-                                <option>Tennis</option>
-                                <option>Volleyball</option>
-                                <option>Athletics</option>
-                                <option>Swimming</option>
-                                <option>Other</option>
+                                <option>
+                                    Football
+                                </option>
+
+                                <option>
+                                    Cricket
+                                </option>
+
+                                <option>
+                                    Basketball
+                                </option>
+
+                                <option>
+                                    Badminton
+                                </option>
+
+                                <option>
+                                    Tennis
+                                </option>
+
+                                <option>
+                                    Volleyball
+                                </option>
+
+                                <option>
+                                    Athletics
+                                </option>
+
+                                <option>
+                                    Swimming
+                                </option>
+
+                                <option>
+                                    Other
+                                </option>
 
                             </select>
 
@@ -335,28 +537,37 @@
                     </div>
 
 
+
                     <div class="input-group">
 
                         <label for="signupPassword">
                             PASSWORD
                         </label>
 
+
                         <div class="input-wrapper">
 
-                            <span class="input-icon">🔒</span>
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
 
                             <input
                                 type="password"
                                 id="signupPassword"
                                 placeholder="Create a password"
-                                required
-                                minlength="6">
+                                autocomplete="new-password"
+                                minlength="6"
+                                required>
+
 
                             <button
                                 type="button"
                                 class="password-toggle"
                                 data-target="signupPassword">
+
                                 👁
+
                             </button>
 
                         </div>
@@ -364,55 +575,92 @@
                     </div>
 
 
+
                     <label class="terms">
 
-                        <input type="checkbox" required>
+                        <input
+                            type="checkbox"
+                            required>
 
                         <span class="checkmark"></span>
 
+
                         <span>
+
                             I agree to the
-                            <a href="#">Terms</a>
+
+                            <a href="#">
+                                Terms
+                            </a>
+
                             and
-                            <a href="#">Privacy Policy</a>.
+
+                            <a href="#">
+                                Privacy Policy
+                            </a>.
+
                         </span>
 
                     </label>
 
 
-                    <button type="submit" class="submit-btn">
 
-                        <span>JOIN THE COMMUNITY</span>
+                    <button
+                        type="submit"
+                        class="submit-btn">
 
-                        <span class="arrow">→</span>
+                        <span>
+                            JOIN THE COMMUNITY
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
 
                     </button>
+
 
                 </form>
 
 
-                <!-- Bottom message -->
-                <p class="auth-footer" id="authFooter">
+
+                <!-- Footer -->
+
+                <p
+                    class="auth-footer"
+                    id="authFooter">
 
                     New to PlaySphere?
 
-                    <button type="button" id="footerSwitch">
+                    <button
+                        type="button"
+                        id="footerSwitch">
+
                         Create an account
+
                     </button>
 
                 </p>
+
 
             </div>
 
         </section>
 
+
     </main>
 
 
-    <!-- Notification -->
-    <div class="notification" id="notification">
 
-        <span class="notification-icon">✓</span>
+    <!-- Notification -->
+
+    <div
+        class="notification"
+        id="notification">
+
+        <span class="notification-icon">
+            ✓
+        </span>
 
         <span id="notificationText">
             Success!
@@ -421,8 +669,17 @@
     </div>
 
 
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- Your JavaScript -->
+
     <script src="script.js"></script>
 
+
 </body>
+
 </html>
-```
