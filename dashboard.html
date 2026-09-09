@@ -1,552 +1,1349 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>PlaySphere | Home</title>
 
-    <title>PlaySphere | Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
+    <!-- Your configuration -->
+    <script src="config.js"></script>
 
     <style>
 
+        /* ========================================
+           GLOBAL
+        ======================================== */
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-
 
         :root {
-
-            --bg: #080b0f;
-
-            --card: #11161c;
-
-            --accent: #c8ff00;
-
-            --text: #ffffff;
-
-            --muted: #858d95;
-
-            --border:
-                rgba(255,255,255,0.08);
-
+            --lime: #c8ff00;
+            --bg: #070b0f;
+            --card: rgba(255,255,255,0.045);
+            --border: rgba(255,255,255,0.09);
+            --muted: #8e969f;
         }
 
-
         body {
-
+            font-family: "Inter", sans-serif;
             background:
                 radial-gradient(
-                    circle at 10% 10%,
+                    circle at 10% 0%,
                     rgba(200,255,0,0.08),
-                    transparent 30%
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(0,150,255,0.07),
+                    transparent 25%
                 ),
                 var(--bg);
 
-            color: var(--text);
-
-            font-family: "Inter", sans-serif;
-
+            color: white;
             min-height: 100vh;
+        }
 
+        button {
+            font-family: inherit;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
 
-        /* NAVBAR */
+        /* ========================================
+           NAVBAR
+        ======================================== */
 
-        nav {
+        .navbar {
+            height: 76px;
 
-            height: 75px;
-
-            border-bottom:
-                1px solid var(--border);
+            padding: 0 5%;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
-            padding: 0 6%;
-
-            background:
-                rgba(8,11,15,0.85);
-
-            backdrop-filter: blur(15px);
-
             position: sticky;
-
             top: 0;
 
-            z-index: 10;
+            z-index: 100;
 
+            background: rgba(7,11,15,0.88);
+            backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid var(--border);
         }
-
 
         .logo {
+            font-family: "Barlow Condensed", sans-serif;
 
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            font-family:
-                "Barlow Condensed";
-
+            font-size: 34px;
             font-weight: 900;
 
-            font-size: 26px;
-
+            letter-spacing: 1px;
         }
-
 
         .logo span {
-
-            color: var(--accent);
-
+            color: var(--lime);
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
 
-        .logo-icon {
-
-            background: var(--accent);
-
-            color: #000;
-
-            padding: 7px 9px;
-
-            border-radius: 7px;
-
+            color: #b8bec5;
+            font-size: 14px;
         }
 
+        .nav-links a {
+            transition: 0.25s;
+        }
 
-        .logout {
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--lime);
+        }
 
-            background:
-                transparent;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-            border:
-                1px solid var(--border);
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-            color: #aaa;
+        .avatar-small {
+            width: 38px;
+            height: 38px;
 
-            padding:
-                10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            border-radius: 50%;
+
+            background: var(--lime);
+            color: #050505;
+
+            font-weight: 800;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 9px 15px;
+
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 8px;
+
+            background: transparent;
+            color: white;
 
             cursor: pointer;
 
-            font-weight: 600;
+            transition: 0.25s;
+        }
 
+        .logout-btn:hover {
+            background: var(--lime);
+            color: #050505;
+            border-color: var(--lime);
         }
 
 
-        .logout:hover {
-
-            border-color:
-                var(--accent);
-
-            color:
-                var(--accent);
-
-        }
-
-
-        /* CONTENT */
+        /* ========================================
+           MAIN CONTAINER
+        ======================================== */
 
         .container {
-
             width: 90%;
+            max-width: 1250px;
 
-            max-width: 1200px;
+            margin: auto;
 
-            margin:
-                60px auto;
-
+            padding: 45px 0 70px;
         }
 
 
-        .welcome {
+        /* ========================================
+           HERO
+        ======================================== */
 
-            margin-bottom: 45px;
+        .hero {
+            position: relative;
 
-        }
+            overflow: hidden;
 
+            min-height: 280px;
 
-        .welcome p {
+            padding: 45px;
 
-            color: var(--accent);
+            border-radius: 24px;
 
-            font-size: 12px;
-
-            letter-spacing: 2px;
-
-            font-weight: 700;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .welcome h1 {
-
-            font-family:
-                "Barlow Condensed";
-
-            font-size:
-                clamp(45px, 7vw, 75px);
-
-            text-transform:
-                uppercase;
-
-            line-height: 0.9;
-
-        }
-
-
-        .welcome h1 span {
-
-            color: var(--accent);
-
-        }
-
-
-        /* CARDS */
-
-        .grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-
-        }
-
-
-        .card {
+            border: 1px solid var(--border);
 
             background:
-                var(--card);
+                linear-gradient(
+                    120deg,
+                    rgba(200,255,0,0.09),
+                    rgba(255,255,255,0.025)
+                );
 
-            border:
-                1px solid var(--border);
-
-            border-radius: 18px;
-
-            padding: 28px;
-
-            min-height: 180px;
-
-            transition:
-                0.3s;
-
+            margin-bottom: 28px;
         }
 
+        .hero::after {
+            content: "⚽";
 
-        .card:hover {
+            position: absolute;
 
-            transform:
-                translateY(-5px);
+            right: 5%;
+            bottom: -30px;
 
-            border-color:
-                rgba(200,255,0,0.3);
+            font-size: 190px;
 
+            opacity: 0.06;
+
+            transform: rotate(-15deg);
         }
 
+        .hero-tag {
+            display: inline-block;
 
-        .card-icon {
+            padding: 7px 13px;
 
-            font-size: 35px;
+            border-radius: 30px;
 
-            margin-bottom: 20px;
+            background: rgba(200,255,0,0.1);
 
+            color: var(--lime);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 18px;
         }
 
+        .hero h1 {
+            position: relative;
+            z-index: 2;
 
-        .card h2 {
+            font-family: "Barlow Condensed", sans-serif;
 
-            font-family:
-                "Barlow Condensed";
+            font-size: clamp(48px, 7vw, 82px);
 
-            font-size: 28px;
+            line-height: 0.88;
 
-            margin-bottom: 7px;
+            text-transform: uppercase;
 
+            max-width: 700px;
         }
 
+        .hero h1 span {
+            color: var(--lime);
+        }
 
-        .card p {
+        .hero p {
+            position: relative;
+            z-index: 2;
 
-            color:
-                var(--muted);
+            color: var(--muted);
 
-            font-size: 13px;
+            margin-top: 18px;
+
+            max-width: 600px;
 
             line-height: 1.6;
 
+            font-size: 15px;
         }
 
 
-        @media(max-width: 800px) {
+        /* ========================================
+           SECTION HEADINGS
+        ======================================== */
 
-            .grid {
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
 
-                grid-template-columns: 1fr;
+            margin: 34px 0 17px;
+        }
 
+        .section-header h2 {
+            font-family: "Barlow Condensed", sans-serif;
+
+            font-size: 32px;
+
+            text-transform: uppercase;
+        }
+
+        .section-header p {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        /* ========================================
+           SPORTS
+        ======================================== */
+
+        .sports-grid {
+            display: grid;
+
+            grid-template-columns: repeat(6, 1fr);
+
+            gap: 13px;
+        }
+
+        .sport-card {
+            min-height: 135px;
+
+            padding: 20px 15px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            background: var(--card);
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .sport-card:hover {
+            transform: translateY(-5px);
+
+            border-color: rgba(200,255,0,0.5);
+
+            background: rgba(200,255,0,0.06);
+        }
+
+        .sport-icon {
+            font-size: 34px;
+        }
+
+        .sport-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .sport-status {
+            color: #777f87;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+
+        /* ========================================
+           CONTENT GRID
+        ======================================== */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns: 1.45fr 0.8fr;
+
+            gap: 22px;
+        }
+
+        .card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 25px;
+        }
+
+
+        /* ========================================
+           PROFILE
+        ======================================== */
+
+        .profile-card {
+            min-height: 270px;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+
+            gap: 17px;
+
+            margin-bottom: 25px;
+        }
+
+        .avatar-large {
+            width: 65px;
+            height: 65px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: var(--lime);
+
+            color: #050505;
+
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .profile-top h3 {
+            font-size: 20px;
+        }
+
+        .profile-top p {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-top: 4px;
+        }
+
+        .profile-info {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+        .info-box {
+            padding: 15px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,0.025);
+
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .info-label {
+            color: #737b84;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+        }
+
+        .info-value {
+            margin-top: 7px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            word-break: break-word;
+        }
+
+
+        /* ========================================
+           ACTIVITY
+        ======================================== */
+
+        .activity-card h2 {
+            font-family: "Barlow Condensed", sans-serif;
+
+            font-size: 28px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+
+            gap: 13px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: rgba(200,255,0,0.08);
+
+            font-size: 19px;
+        }
+
+        .activity-text strong {
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .activity-text span {
+            color: #737b84;
+
+            font-size: 11px;
+        }
+
+
+        /* ========================================
+           EVENTS
+        ======================================== */
+
+        .events-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .event-card {
+            padding: 20px;
+
+            border-radius: 15px;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            transition: 0.25s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+
+            border-color: rgba(200,255,0,0.4);
+        }
+
+        .event-sport {
+            color: var(--lime);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+        }
+
+        .event-card h3 {
+            font-family: "Barlow Condensed", sans-serif;
+
+            font-size: 24px;
+
+            margin-bottom: 10px;
+        }
+
+        .event-meta {
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.8;
+        }
+
+        .event-button {
+            margin-top: 15px;
+
+            width: 100%;
+
+            padding: 9px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .event-button:hover {
+            background: var(--lime);
+            color: #050505;
+        }
+
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #555d65;
+
+            font-size: 12px;
+
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+
+        /* ========================================
+           MOBILE
+        ======================================== */
+
+        @media (max-width: 1000px) {
+
+            .sports-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
 
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 25px;
+            }
+
+            .hero {
+                padding: 30px 25px;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .sports-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
         }
 
     </style>
-
 </head>
 
 
 <body>
 
 
-    <nav>
+<!-- ==========================================
+     NAVIGATION
+=========================================== -->
+
+<nav class="navbar">
+
+    <a href="dashboard.html" class="logo">
+        PLAY<span>SPHERE</span>
+    </a>
 
 
-        <div class="logo">
+    <div class="nav-links">
 
-            <div class="logo-icon">
-                ⚡
+        <a href="dashboard.html" class="active">
+            Home
+        </a>
+
+        <a href="communities.html">
+            Communities
+        </a>
+
+        <a href="#">
+            Events
+        </a>
+
+        <a href="#">
+            Players
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="profile-mini">
+
+            <div class="avatar-small" id="navAvatar">
+                P
             </div>
 
-            PLAY<span>SPHERE</span>
+            <span class="user-name" id="navUserName">
+                Loading...
+            </span>
+
+        </div>
+
+        <button class="logout-btn" id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ==========================================
+     MAIN
+=========================================== -->
+
+<main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-tag">
+            Your Sports Community
+        </div>
+
+        <h1>
+            Welcome back,
+            <span id="welcomeName">Player</span>
+        </h1>
+
+        <p>
+            Discover sports, connect with players,
+            join communities and find your next game.
+        </p>
+
+    </section>
+
+
+
+    <!-- SPORTS -->
+
+    <div class="section-header">
+
+        <div>
+            <h2>Explore Sports</h2>
+
+            <p>
+                Find your favourite game
+            </p>
+        </div>
+
+    </div>
+
+
+    <section class="sports-grid">
+
+        <div class="sport-card">
+
+            <div class="sport-icon">
+                ⚽
+            </div>
+
+            <div>
+                <div class="sport-name">
+                    Football
+                </div>
+
+                <div class="sport-status">
+                    Join community
+                </div>
+            </div>
 
         </div>
 
 
-        <button
-            class="logout"
-            id="logoutBtn">
+        <div class="sport-card">
 
-            LOGOUT
+            <div class="sport-icon">
+                🏏
+            </div>
 
-        </button>
+            <div>
+                <div class="sport-name">
+                    Cricket
+                </div>
+
+                <div class="sport-status">
+                    Join community
+                </div>
+            </div>
+
+        </div>
 
 
-    </nav>
+        <div class="sport-card">
+
+            <div class="sport-icon">
+                🏀
+            </div>
+
+            <div>
+                <div class="sport-name">
+                    Basketball
+                </div>
+
+                <div class="sport-status">
+                    Join community
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="sport-card">
+
+            <div class="sport-icon">
+                🎾
+            </div>
+
+            <div>
+                <div class="sport-name">
+                    Tennis
+                </div>
+
+                <div class="sport-status">
+                    Join community
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="sport-card">
+
+            <div class="sport-icon">
+                🏸
+            </div>
+
+            <div>
+                <div class="sport-name">
+                    Badminton
+                </div>
+
+                <div class="sport-status">
+                    Join community
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="sport-card">
+
+            <div class="sport-icon">
+                🏐
+            </div>
+
+            <div>
+                <div class="sport-name">
+                    Volleyball
+                </div>
+
+                <div class="sport-status">
+                    Join community
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 
 
 
-    <main class="container">
+    <!-- PROFILE + ACTIVITY -->
 
+    <div class="section-header">
 
-        <section class="welcome">
+        <div>
+            <h2>Your Space</h2>
 
             <p>
-                WELCOME TO THE COMMUNITY
+                Your PlaySphere overview
             </p>
+        </div>
+
+    </div>
 
 
-            <h1>
-
-                READY TO<br>
-
-                <span>PLAY?</span>
-
-            </h1>
-
-        </section>
+    <section class="content-grid">
 
 
+        <!-- PROFILE -->
 
-        <section class="grid">
+        <div class="card profile-card">
+
+            <div class="profile-top">
+
+                <div class="avatar-large" id="profileAvatar">
+                    P
+                </div>
+
+                <div>
+
+                    <h3 id="profileName">
+                        Loading...
+                    </h3>
+
+                    <p>
+                        PlaySphere member
+                    </p>
+
+                </div>
+
+            </div>
 
 
-            <div class="card">
+            <div class="profile-info">
 
-                <div class="card-icon">
+                <div class="info-box">
+
+                    <div class="info-label">
+                        First Name
+                    </div>
+
+                    <div class="info-value" id="firstName">
+                        Loading...
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Favourite Sport
+                    </div>
+
+                    <div class="info-value" id="favouriteSport">
+                        Loading...
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Email
+                    </div>
+
+                    <div class="info-value" id="userEmail">
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTIVITY -->
+
+        <div class="card activity-card">
+
+            <h2>Quick Start</h2>
+
+
+            <div class="activity-item">
+
+                <div class="activity-icon">
                     👥
                 </div>
 
-                <h2>
-                    FIND PLAYERS
-                </h2>
+                <div class="activity-text">
 
-                <p>
-                    Discover athletes and
-                    teammates who share your
-                    passion for sports.
-                </p>
+                    <strong>
+                        Find a community
+                    </strong>
+
+                    <span>
+                        Connect with people who play your sport.
+                    </span>
+
+                </div>
 
             </div>
 
 
+            <div class="activity-item">
 
-            <div class="card">
+                <div class="activity-icon">
+                    📅
+                </div>
 
-                <div class="card-icon">
+                <div class="activity-text">
+
+                    <strong>
+                        Find an event
+                    </strong>
+
+                    <span>
+                        Discover matches and tournaments.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity-item">
+
+                <div class="activity-icon">
                     🏆
                 </div>
 
-                <h2>
-                    JOIN EVENTS
-                </h2>
+                <div class="activity-text">
 
-                <p>
-                    Find local matches,
-                    tournaments and sports
-                    events near you.
-                </p>
+                    <strong>
+                        Build your profile
+                    </strong>
 
-            </div>
+                    <span>
+                        Tell the community about yourself.
+                    </span>
 
-
-
-            <div class="card">
-
-                <div class="card-icon">
-                    📊
                 </div>
 
-                <h2>
-                    YOUR PROFILE
-                </h2>
+            </div>
 
-                <p id="profileText">
-                    Loading your profile...
-                </p>
+        </div>
+
+    </section>
+
+
+
+    <!-- EVENTS -->
+
+    <div class="section-header">
+
+        <div>
+
+            <h2>Upcoming Events</h2>
+
+            <p>
+                Get ready for your next game
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section class="events-grid">
+
+
+        <div class="event-card">
+
+            <div class="event-sport">
+                ⚽ Football
+            </div>
+
+            <h3>
+                Campus Football
+            </h3>
+
+            <div class="event-meta">
+
+                📍 University Ground<br>
+
+                📅 Coming Soon<br>
+
+                👥 Players wanted
 
             </div>
 
+            <button class="event-button">
+                Coming Soon
+            </button>
 
-        </section>
-
-
-    </main>
-
-
-
-    <!-- Supabase -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
+        </div>
 
 
-    <script>
+        <div class="event-card">
+
+            <div class="event-sport">
+                🏏 Cricket
+            </div>
+
+            <h3>
+                Weekend Cricket
+            </h3>
+
+            <div class="event-meta">
+
+                📍 Sports Ground<br>
+
+                📅 Coming Soon<br>
+
+                👥 Players wanted
+
+            </div>
+
+            <button class="event-button">
+                Coming Soon
+            </button>
+
+        </div>
+
+
+        <div class="event-card">
+
+            <div class="event-sport">
+                🏀 Basketball
+            </div>
+
+            <h3>
+                3 × 3 Basketball
+            </h3>
+
+            <div class="event-meta">
+
+                📍 Indoor Court<br>
+
+                📅 Coming Soon<br>
+
+                👥 Teams wanted
+
+            </div>
+
+            <button class="event-button">
+                Coming Soon
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    © 2026 PlaySphere · Built for people who love to play.
+
+</footer>
+
+
+
+<!-- ==========================================
+     DASHBOARD JAVASCRIPT
+=========================================== -->
+
+<script>
+
+    // Create Supabase client using config.js
+
+    const { createClient } = window.supabase;
+
+    const supabaseClient = createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+    // ========================================
+    // LOAD USER
+    // ========================================
+
+    async function loadDashboard() {
 
         const {
-            createClient
-        } = window.supabase;
+            data: {
+                user
+            }
+        } = await supabaseClient.auth.getUser();
 
-        const supabase =
-            createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
 
-        /* CHECK LOGIN */
+        // Not logged in
 
-        async function checkUser() {
+        if (!user) {
+
+            window.location.href = "index.html";
+
+            return;
+
+        }
+
+
+        // User metadata from signup
+
+        const metadata = user.user_metadata || {};
+
+
+        const firstName =
+            metadata.first_name || "Player";
+
+
+        const lastName =
+            metadata.last_name || "";
+
+
+        const favouriteSport =
+            metadata.favourite_sport || "Not selected";
+
+
+        const fullName =
+            `${firstName} ${lastName}`.trim();
+
+
+        // ====================================
+        // UPDATE UI
+        // ====================================
+
+        document.getElementById("welcomeName")
+            .textContent = firstName;
+
+
+        document.getElementById("navUserName")
+            .textContent = fullName || user.email;
+
+
+        document.getElementById("profileName")
+            .textContent = fullName || "Player";
+
+
+        document.getElementById("firstName")
+            .textContent = firstName;
+
+
+        document.getElementById("favouriteSport")
+            .textContent = favouriteSport;
+
+
+        document.getElementById("userEmail")
+            .textContent = user.email;
+
+
+        // ====================================
+        // AVATARS
+        // ====================================
+
+        const initial =
+            firstName.charAt(0).toUpperCase();
+
+
+        document.getElementById("navAvatar")
+            .textContent = initial;
+
+
+        document.getElementById("profileAvatar")
+            .textContent = initial;
+
+    }
+
+
+    // ========================================
+    // LOGOUT
+    // ========================================
+
+    document.getElementById("logoutBtn")
+        .addEventListener("click", async () => {
 
             const {
-                data,
                 error
-            } =
-                await supabase.auth
-                    .getUser();
+            } = await supabaseClient.auth.signOut();
 
 
-            if (
-                error ||
-                !data.user
-            ) {
+            if (error) {
 
-                window.location.href =
-                    "index.html";
+                alert(error.message);
 
                 return;
 
             }
 
 
-            const user =
-                data.user;
+            window.location.href = "index.html";
+
+        });
 
 
-            const firstName =
-                user.user_metadata
-                    ?.first_name ||
-                "Athlete";
+    // ========================================
+    // START
+    // ========================================
 
+    loadDashboard();
 
-            document
-                .querySelector(".welcome h1")
-                .innerHTML =
-                `READY TO<br>
-                 <span>PLAY, ${firstName.toUpperCase()}?</span>`;
-
-
-            const sport =
-                user.user_metadata
-                    ?.favourite_sport;
-
-
-            document
-                .getElementById(
-                    "profileText"
-                )
-                .textContent =
-                sport
-                    ? `Your favourite sport is ${sport}. Build your profile and connect with the community.`
-                    : "Build your profile and connect with the community.";
-
-        }
-
-
-
-        /* LOGOUT */
-
-        document
-            .getElementById("logoutBtn")
-            .addEventListener(
-                "click",
-                async () => {
-
-                    await supabase.auth
-                        .signOut();
-
-                    window.location.href =
-                        "index.html";
-
-                }
-            );
-
-
-        checkUser();
-
-    </script>
+</script>
 
 
 </body>
-
 </html>
-```
