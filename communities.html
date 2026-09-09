@@ -908,7 +908,10 @@
                 communities.map(
                     community => `
 
-                    <div class="community-card">
+                    <div class="community-card"
+                    onclick="openCommunity('${community.slug}')"
+                    style="cursor: pointer;"
+                    >
 
                         <div class="sport-icon">
 
