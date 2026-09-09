@@ -1167,6 +1167,12 @@
         /* =========================
            START
         ========================== */
+        function openCommunity(slug) {
+
+            window.location.href =
+            `community.html?slug=${encodeURIComponent(slug)}`;
+
+        }
 
         initialize();
 
