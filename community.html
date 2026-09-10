@@ -1593,6 +1593,18 @@
                                         post.content
                                     )}
                                 </div>
+                                <div class="post-actions">
+                                    <button
+                                        class="post-action like-btn ${post.liked ? "liked" : ""}"
+                                        onclick="toggleLike('${post.id}', ${post.liked})"
+                                    >
+                                        <span>${post.liked ? "❤️" : "♡"}</span>
+                                        <span id="likes-${post.id}">
+                                            ${post.likeCount || 0}
+                                        </span>
+                                        Like
+                                    </button>
+                                </div>
 
                             </article>
 
