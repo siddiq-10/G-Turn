@@ -1465,6 +1465,23 @@
                             ascending: false
                         }
                     );
+            const postIds = posts.map(post => post.id);
+
+                    let likes = [];
+
+                    if (postIds.length > 0) {
+                        const { data: likesData, error: likesError } =
+                            await supabaseClient
+                                .from("post_likes")
+                                .select("post_id, user_id")
+                                .in("post_id", postIds);
+
+                        if (likesError) {
+                            console.error("Error loading likes:", likesError);
+                        } else {
+                            likes = likesData || [];
+                        }
+                    }
 
 
             if (error) {
