@@ -1485,14 +1485,14 @@
             const likeCounts = {};
             const likedByUser = new Set();
 
-                    likes.forEach(like => {
-                        likeCounts[like.post_id] =
-                            (likeCounts[like.post_id] || 0) + 1;
+            likes.forEach(like => {
+                likeCounts[like.post_id] =
+                    (likeCounts[like.post_id] || 0) + 1;
 
-                        if (like.user_id === currentUser.id) {
-                            likedByUser.add(like.post_id);
-                        }
-                    });
+                if (like.user_id === currentUser.id) {
+                    likedByUser.add(like.post_id);
+                }
+            });
             const enrichedPosts = posts.map(post => ({
                 ...post,
                 likeCount: likeCounts[post.id] || 0,
@@ -1557,7 +1557,7 @@
             }
 
 
-            renderPosts(posts);
+            renderPosts(enrichedPosts);
 
         }
 
