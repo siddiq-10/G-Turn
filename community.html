@@ -1701,6 +1701,18 @@
                                         </span>
                                         Like
                                     </button>
+                                    <button
+                                        class="post-action comment-btn"
+                                        onclick="toggleComments('${post.id}')"
+                                    >
+                                        💬
+
+                                        <span id="comments-${post.id}">
+                                            ${post.commentCount || 0}
+                                        </span>
+
+                                        Comments
+                                    </button>
                                 </div>
 
                             </article>
