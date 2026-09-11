@@ -1496,8 +1496,40 @@
             const enrichedPosts = posts.map(post => ({
                 ...post,
                 likeCount: likeCounts[post.id] || 0,
-                liked: likedByUser.has(post.id)
+                liked: likedByUser.has(post.id),
+                commentCount: commentCounts[post.id] || 0
             }));
+            // =========================
+            // LOAD COMMENT COUNTS
+            // =========================
+
+            const commentCounts = {};
+
+            if (postIds.length > 0) {
+
+                const { data: commentsData, error: commentsError } =
+                    await supabaseClient
+                        .from("comments")
+                        .select("post_id")
+                        .in("post_id", postIds);
+
+                if (commentsError) {
+
+                    console.error(
+                        "Error loading comments:",
+                        commentsError
+                    );
+
+                } else {
+
+                    (commentsData || []).forEach(comment => {
+
+                        commentCounts[comment.post_id] =
+                            (commentCounts[comment.post_id] || 0) + 1;
+
+                    });
+                }
+            }
 
 
             if (error) {
