@@ -1493,12 +1493,7 @@
                     likedByUser.add(like.post_id);
                 }
             });
-            const enrichedPosts = posts.map(post => ({
-                ...post,
-                likeCount: likeCounts[post.id] || 0,
-                liked: likedByUser.has(post.id),
-                commentCount: commentCounts[post.id] || 0
-            }));
+        
             // =========================
             // LOAD COMMENT COUNTS
             // =========================
