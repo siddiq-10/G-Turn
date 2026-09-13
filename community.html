@@ -1525,6 +1525,12 @@
                     });
                 }
             }
+            const enrichedPosts=posts.map(post => ({
+                ...post,
+                likeCount: likeCounts[post.id] || 0,
+                liked: likedByUser.has(post.id),
+                commentCount: commentCount[post.id] || 0
+            }));
 
 
             if (error) {
