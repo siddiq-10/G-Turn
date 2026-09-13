@@ -795,6 +795,134 @@
     .like-btn span:first-child {
         font-size: 16px;
     }
+    /* =========================
+        COMMENTS
+    ========================= */
+
+    .comments-section {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .comments-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .comment-item {
+        display: flex;
+        gap: 10px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 10px;
+    }
+
+    .comment-avatar {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: 50%;
+        background: #c6ff00;
+        color: #111;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 13px;
+    }
+
+    .comment-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .comment-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 3px;
+    }
+
+    .comment-author {
+        font-weight: 700;
+        font-size: 13px;
+        color: white;
+    }
+
+    .comment-time {
+        font-size: 11px;
+        color: #777;
+    }
+
+    .comment-content {
+        color: #ccc;
+        font-size: 14px;
+        line-height: 1.5;
+        word-break: break-word;
+    }
+
+    .comment-delete {
+        border: none;
+        background: transparent;
+        color: #777;
+        cursor: pointer;
+        font-size: 11px;
+        padding: 3px 5px;
+    }
+
+    .comment-delete:hover {
+        color: #ff5c7a;
+    }
+
+    .comment-form {
+        display: flex;
+        gap: 8px;
+    }
+
+    .comment-input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #0b0d0e;
+        color: white;
+        border-radius: 9px;
+        padding: 10px 12px;
+        outline: none;
+        font-family: inherit;
+    }
+
+    .comment-input:focus {
+        border-color: #c6ff00;
+    }
+
+    .comment-submit {
+        border: none;
+        background: #c6ff00;
+        color: #111;
+        border-radius: 9px;
+        padding: 0 15px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .comment-submit:hover {
+        transform: translateY(-1px);
+    }
+
+    .comments-empty {
+        color: #777;
+        font-size: 13px;
+        padding: 5px 0 10px;
+    }
+
+    .comments-loading {
+        color: #777;
+        font-size: 13px;
+        padding: 5px 0 10px;
+    }
 
     </style>
 
