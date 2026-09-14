@@ -1374,6 +1374,111 @@ async function loadComments(postId) {
         );
 
     }
+}       /* =========================
+   CREATE COMMENT
+========================= */
+
+async function createComment(postId) {
+
+    if (!currentUser) {
+
+        alert(
+            "Please log in to comment."
+        );
+
+        return;
+    }
+
+
+    const input =
+        document.getElementById(
+            `comment-input-${postId}`
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    const content =
+        input.value.trim();
+
+
+    if (!content) {
+
+        alert(
+            "Please write something first."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+            .from("comments")
+            .insert({
+
+                post_id: postId,
+
+                user_id:
+                    currentUser.id,
+
+                content: content
+
+            });
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        // Clear input
+        input.value = "";
+
+
+        // Update comment count
+        const countElement =
+            document.getElementById(
+                `comments-${postId}`
+            );
+
+
+        if (countElement) {
+
+            const currentCount =
+                parseInt(
+                    countElement.textContent
+                ) || 0;
+
+
+            countElement.textContent =
+                currentCount + 1;
+
+        }
+
+
+        // Reload comments
+        await loadComments(postId);
+
+
+    } catch (error) {
+
+        console.error(
+            "Create comment error:",
+            error
+        );
+
+        alert(
+            "Unable to post comment. Please try again."
+        );
+
+    }
 }
 
 
