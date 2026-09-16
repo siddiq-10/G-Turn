@@ -1691,6 +1691,8 @@
             }
             const enrichedPosts=posts.map(post => ({
                 ...post,
+                authorName: profileMap[post.user_id]?.name || "Player",
+                favouriteSport: profileMap[post.user_id]?.favouriteSport || "",
                 likeCount: likeCounts[post.id] || 0,
                 liked: likedByUser.has(post.id),
                 commentCount: commentCounts[post.id] || 0
