@@ -772,7 +772,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .post-action {
+        .post-action {
         border: none;
         background: transparent;
         color: #aaa;
@@ -783,16 +783,16 @@
         transition: 0.2s ease;
     }
 
-    .post-action:hover {
+        .post-action:hover {
         background: rgba(255, 255, 255, 0.08);
         color: white;
     }
 
-    .like-btn.liked {
+        .like-btn.liked {
         color: #ff5c7a;
     }
 
-    .like-btn span:first-child {
+        .like-btn span:first-child {
         font-size: 16px;
     }
     /* =========================
@@ -2313,6 +2313,7 @@ async function loadComments(postId) {
             >
 
             <button
+                type="button"
                 class="comment-submit"
                 onclick="createComment('${postId}')"
             >
@@ -2358,9 +2359,7 @@ async function loadComments(postId) {
 async function createComment(postId) {
 
     if (!currentUser) {
-
         alert("Please log in to comment.");
-
         return;
     }
 
@@ -2369,20 +2368,29 @@ async function createComment(postId) {
     );
 
     if (!input) {
+        console.error(
+            "Comment input not found:",
+            `comment-input-${postId}`
+        );
         return;
     }
 
     const content = input.value.trim();
 
     if (!content) {
-
         alert("Please write a comment first.");
-
         return;
     }
 
-    try {
+    const submitButton =
+        input.parentElement.querySelector(".comment-submit");
 
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+    }
+
+    try {
         const {
             error
         } = await supabaseClient
@@ -2397,20 +2405,20 @@ async function createComment(postId) {
             throw error;
         }
 
-        // Reload the comment list
+        input.value = "";
+
         await loadComments(postId);
 
-        // Update the visible comment count
         const countElement =
             document.getElementById(
                 `comments-${postId}`
             );
 
         if (countElement) {
-
             const currentCount =
                 parseInt(
-                    countElement.textContent
+                    countElement.textContent,
+                    10
                 ) || 0;
 
             countElement.textContent =
@@ -2425,8 +2433,16 @@ async function createComment(postId) {
         );
 
         alert(
-            "Unable to post comment. Please try again."
+            "Unable to post comment: " +
+            error.message
         );
+
+    } finally {
+
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = "Send";
+        }
     }
 }
 
@@ -2504,7 +2520,7 @@ async function deleteComment(
         );
     }
 }
-        initialize();
+    initialize();
 
     </script>
 
