@@ -1594,6 +1594,29 @@
                         }
                     );
             const postIds = posts.map(post => post.id);
+                    const userIds=[
+                        ...new Set(posts.map(post=>post.userId))
+                    ];
+
+                    let profiles =[];
+
+                    if (userIds.length > 0){
+                        const{
+                            data:profilesData,
+                            error:profilesError
+                        }=await supabaseClient
+                            .from("profiles")
+                            .select("id, first_name, last_name, favourite_sport")
+                            .in("id", userIds);
+                        if (profilesError){
+                            console.error(
+                                "Error loading profiles:",
+                                profilesError
+                            );
+                        } else{
+                            profiles=profilesData || [];
+                        }
+                    }
 
                     let likes = [];
 
