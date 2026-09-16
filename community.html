@@ -2118,6 +2118,392 @@
         alert("Unable to update like. Please try again.");
     }
 }
+    /* =========================
+   TOGGLE COMMENTS
+========================= */
+
+async function toggleComments(postId) {
+
+    const section = document.getElementById(
+        `comments-section-${postId}`
+    );
+
+    if (!section) {
+        console.error(
+            "Comments section not found:",
+            postId
+        );
+        return;
+    }
+
+    // Close comments if already open
+    if (section.style.display === "block") {
+        section.style.display = "none";
+        return;
+    }
+
+    // Open comments
+    section.style.display = "block";
+
+    section.innerHTML = `
+        <div class="comments-loading">
+            Loading comments...
+        </div>
+    `;
+
+    await loadComments(postId);
+}
+
+
+/* =========================
+   LOAD COMMENTS
+========================= */
+
+async function loadComments(postId) {
+
+    const section = document.getElementById(
+        `comments-section-${postId}`
+    );
+
+    if (!section) {
+        return;
+    }
+
+    const {
+        data: comments,
+        error
+    } = await supabaseClient
+        .from("comments")
+        .select(`
+            id,
+            post_id,
+            user_id,
+            content,
+            created_at
+        `)
+        .eq("post_id", postId)
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+    if (error) {
+
+        console.error(
+            "Error loading comments:",
+            error
+        );
+
+        section.innerHTML = `
+            <div class="comments-empty">
+                Unable to load comments.
+            </div>
+        `;
+
+        return;
+    }
+
+    const commentsList = comments || [];
+
+    let commentsHTML = "";
+
+    if (commentsList.length === 0) {
+
+        commentsHTML = `
+            <div class="comments-empty">
+                No comments yet. Be the first to comment!
+            </div>
+        `;
+
+    } else {
+
+        commentsHTML = commentsList
+            .map(comment => {
+
+                const isOwner =
+                    comment.user_id === currentUser.id;
+
+                const metadata =
+                    isOwner
+                        ? currentUser.user_metadata || {}
+                        : {};
+
+                const firstName =
+                    isOwner
+                        ? (
+                            metadata.first_name ||
+                            "Player"
+                        )
+                        : "Player";
+
+                const initial =
+                    firstName
+                        .charAt(0)
+                        .toUpperCase();
+
+                return `
+                    <div class="comment-item">
+
+                        <div class="comment-avatar">
+                            ${initial}
+                        </div>
+
+                        <div class="comment-body">
+
+                            <div class="comment-header">
+
+                                <span class="comment-author">
+                                    ${escapeHTML(firstName)}
+                                </span>
+
+                                <span class="comment-time">
+                                    ${formatDate(
+                                        comment.created_at
+                                    )}
+                                </span>
+
+                            </div>
+
+                            <div class="comment-content">
+                                ${escapeHTML(
+                                    comment.content
+                                )}
+                            </div>
+
+                        </div>
+
+                        ${
+                            isOwner
+                                ? `
+                                    <button
+                                        class="comment-delete"
+                                        onclick="deleteComment(
+                                            '${comment.id}',
+                                            '${postId}'
+                                        )"
+                                    >
+                                        Delete
+                                    </button>
+                                `
+                                : ""
+                        }
+
+                    </div>
+                `;
+            })
+            .join("");
+    }
+
+    section.innerHTML = `
+
+        <div class="comments-list">
+            ${commentsHTML}
+        </div>
+
+        <div class="comment-form">
+
+            <input
+                type="text"
+                id="comment-input-${postId}"
+                class="comment-input"
+                placeholder="Write a comment..."
+                maxlength="500"
+            >
+
+            <button
+                class="comment-submit"
+                onclick="createComment('${postId}')"
+            >
+                Send
+            </button>
+
+        </div>
+
+    `;
+
+    // Press Enter to send
+    const input = document.getElementById(
+        `comment-input-${postId}`
+    );
+
+    if (input) {
+
+        input.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    createComment(postId);
+                }
+
+            }
+        );
+
+    }
+}
+
+
+/* =========================
+   CREATE COMMENT
+========================= */
+
+async function createComment(postId) {
+
+    if (!currentUser) {
+
+        alert("Please log in to comment.");
+
+        return;
+    }
+
+    const input = document.getElementById(
+        `comment-input-${postId}`
+    );
+
+    if (!input) {
+        return;
+    }
+
+    const content = input.value.trim();
+
+    if (!content) {
+
+        alert("Please write a comment first.");
+
+        return;
+    }
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+            .from("comments")
+            .insert({
+                post_id: postId,
+                user_id: currentUser.id,
+                content: content
+            });
+
+        if (error) {
+            throw error;
+        }
+
+        // Reload the comment list
+        await loadComments(postId);
+
+        // Update the visible comment count
+        const countElement =
+            document.getElementById(
+                `comments-${postId}`
+            );
+
+        if (countElement) {
+
+            const currentCount =
+                parseInt(
+                    countElement.textContent
+                ) || 0;
+
+            countElement.textContent =
+                currentCount + 1;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Create comment error:",
+            error
+        );
+
+        alert(
+            "Unable to post comment. Please try again."
+        );
+    }
+}
+
+
+/* =========================
+   DELETE COMMENT
+========================= */
+
+async function deleteComment(
+    commentId,
+    postId
+) {
+
+    if (!currentUser) {
+        return;
+    }
+
+    const confirmed = confirm(
+        "Delete this comment?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+            .from("comments")
+            .delete()
+            .eq("id", commentId)
+            .eq(
+                "user_id",
+                currentUser.id
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        // Update comment count
+        const countElement =
+            document.getElementById(
+                `comments-${postId}`
+            );
+
+        if (countElement) {
+
+            const currentCount =
+                parseInt(
+                    countElement.textContent
+                ) || 0;
+
+            countElement.textContent =
+                Math.max(
+                    0,
+                    currentCount - 1
+                );
+        }
+
+        // Reload comments
+        await loadComments(postId);
+
+    } catch (error) {
+
+        console.error(
+            "Delete comment error:",
+            error
+        );
+
+        alert(
+            "Unable to delete comment. Please try again."
+        );
+    }
+}
         initialize();
 
     </script>
