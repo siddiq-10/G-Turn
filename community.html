@@ -1618,6 +1618,19 @@
                         }
                     }
 
+                    const profileMap={};
+                    profiles.forEach(profile => {
+                        const fullName=
+                            `${profile.first_name || ""} ${profile.last_name || ""}`.trim();
+
+                        profile[profile.id]={
+                            name: fullName || "Player",
+                            favouriteSport: profile.favourite_sport || ""
+                        };
+                            
+                    });  
+                
+
                     let likes = [];
 
                     if (postIds.length > 0) {
