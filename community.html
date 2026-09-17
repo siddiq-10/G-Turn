@@ -1782,19 +1782,8 @@
                             currentUser.id;
 
 
-                        const metadata =
-                            isOwner
-                                ? currentUser.user_metadata || {}
-                                : {};
-
-
                         const firstName =
-                            isOwner
-                                ? (
-                                    metadata.first_name ||
-                                    "Player"
-                                )
-                                : "Player";
+                            post.authorName || "Player";
 
 
                         const initial =
