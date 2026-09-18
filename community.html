@@ -1593,6 +1593,26 @@
                             ascending: false
                         }
                     );
+            if (error){
+                console.error(
+                    "Error loading posts:",
+                    error
+                );
+                document.getElementById("postscontainer").innerHTML=`
+                    <div class="empty-state">
+                            Unable to load discussions.
+                    </div>
+                `;
+                return;
+            }
+            if (!posts || posts.length === 0){
+                document.getElementById("postsContainer").innerHTML=`
+                    <div class="empty-state">
+                        No discussions yet. Be the first to post!
+                    </div>
+                `;
+                return;
+            }
             const postIds = posts.map(post => post.id);
                     const userIds=[
                         ...new Set(posts.map(post=>post.user_id))
