@@ -1595,7 +1595,7 @@
                     );
             const postIds = posts.map(post => post.id);
                     const userIds=[
-                        ...new Set(posts.map(post=>post.userId))
+                        ...new Set(posts.map(post=>post.user_id))
                     ];
 
                     let profiles =[];
