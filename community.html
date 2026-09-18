@@ -1623,7 +1623,7 @@
                         const fullName=
                             `${profile.first_name || ""} ${profile.last_name || ""}`.trim();
 
-                        profile[profile.id]={
+                        profileMap[profile.id]={
                             name: fullName || "Player",
                             favouriteSport: profile.favourite_sport || ""
                         };
