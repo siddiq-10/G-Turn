@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | PlaySphere</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080a0b;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(8,10,11,0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #c6ff00;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #c6ff00;
+        }
+
+        .nav-profile {
+            color: #c6ff00 !important;
+            font-weight: 700;
+        }
+
+        /* ================= PAGE ================= */
+
+        .container {
+            width: min(1000px, 92%);
+            margin: 40px auto;
+        }
+
+        /* ================= PROFILE CARD ================= */
+
+        .profile-card {
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,0.06),
+                rgba(255,255,255,0.025)
+            );
+
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 35px;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        /* ================= AVATAR ================= */
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            min-width: 110px;
+            border-radius: 50%;
+
+            background: #c6ff00;
+            color: #111;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+            font-weight: 900;
+
+            border: 5px solid rgba(198,255,0,0.15);
+        }
+
+        /* ================= PROFILE INFO ================= */
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .profile-sport {
+            display: inline-block;
+            color: #c6ff00;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .profile-bio {
+            color: #aaa;
+            line-height: 1.6;
+            max-width: 650px;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .edit-btn {
+            border: none;
+            background: #c6ff00;
+            color: #111;
+            padding: 11px 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 32px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 25px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .stat-label {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* ================= POSTS ================= */
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .post-card {
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .post-meta {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .post-content {
+            color: #ddd;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .empty {
+            color: #777;
+            padding: 20px 0;
+        }
+
+        /* ================= LOADING ================= */
+
+        .loading {
+            text-align: center;
+            color: #777;
+            padding: 60px 0;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .profile-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-name {
+                font-size: 26px;
+            }
+
+            .profile-bio {
+                margin: auto;
+            }
+
+            .stats {
+                margin-top: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PlaySphere
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Home</a>
+            <a href="communities.html">Communities</a>
+            <a href="profile.html" class="nav-profile">Profile</a>
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <div id="loading" class="loading">
+            Loading profile...
+        </div>
+
+        <div id="profileContainer" style="display:none;">
+
+            <!-- PROFILE -->
+
+            <section class="profile-card">
+
+                <div class="profile-top">
+
+                    <div id="avatar" class="avatar">
+                        P
+                    </div>
+
+                    <div class="profile-info">
+
+                        <div id="profileName" class="profile-name">
+                            Player
+                        </div>
+
+                        <div id="profileSport" class="profile-sport">
+                            🏅 Sports
+                        </div>
+
+                        <div id="profileBio" class="profile-bio">
+                            No bio yet.
+                        </div>
+
+                    </div>
+
+                    <div id="editContainer">
+                        <button
+                            class="edit-btn"
+                            onclick="editProfile()"
+                        >
+                            Edit Profile
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <div
+                            id="postCount"
+                            class="stat-number"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Posts
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div
+                            id="communityCount"
+                            class="stat-number"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Communities
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div
+                            id="likeCount"
+                            class="stat-number"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Likes Received
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- POSTS -->
+
+            <section class="section">
+
+                <div class="section-title">
+                    Recent Posts
+                </div>
+
+                <div id="postsContainer">
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="config.js"></script>
+
+
+    <script>
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        let currentUser = null;
+        let profileUserId = null;
+
+
+        /* ================= HELPERS ================= */
+
+        function escapeHTML(value) {
+
+            return String(value || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        function getInitials(firstName, lastName) {
+
+            const first =
+                (firstName || "").trim();
+
+            const last =
+                (lastName || "").trim();
+
+            if (first && last) {
+                return (
+                    first.charAt(0) +
+                    last.charAt(0)
+                ).toUpperCase();
+            }
+
+            if (first) {
+                return first
+                    .substring(0, 2)
+                    .toUpperCase();
+            }
+
+            return "P";
+        }
+
+
+        /* ================= EDIT PROFILE ================= */
+
+        function editProfile() {
+
+            window.location.href =
+                `edit-profile.html?id=${encodeURIComponent(profileUserId)}`;
+        }
+
+
+        /* ================= LOAD PROFILE ================= */
+
+        async function loadProfile() {
+
+            try {
+
+                const {
+                    data: {
+                        user
+                    }
+                } =
+                    await supabaseClient
+                        .auth
+                        .getUser();
+
+
+                if (!user) {
+
+                    window.location.href =
+                        "index.html";
+
+                    return;
+                }
+
+
+                currentUser = user;
+
+
+                /*
+                 * If ?id= exists,
+                 * view that user's profile.
+                 *
+                 * Otherwise,
+                 * view our own profile.
+                 */
+
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+                profileUserId =
+                    params.get("id") || user.id;
+
+
+                /* ================= PROFILE ================= */
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select(`
+                            id,
+                            first_name,
+                            last_name,
+                            favourite_sport,
+                            bio,
+                            avatar_url,
+                            created_at
+                        `)
+                        .eq("id", profileUserId)
+                        .single();
+
+
+                if (profileError) {
+                    throw profileError;
+                }
+
+
+                const firstName =
+                    profile.first_name || "";
+
+                const lastName =
+                    profile.last_name || "";
+
+
+                const fullName =
+                    `${firstName} ${lastName}`
+                        .trim() || "Player";
+
+
+                /* ================= PROFILE UI ================= */
+
+                document.getElementById(
+                    "profileName"
+                ).textContent = fullName;
+
+
+                document.getElementById(
+                    "profileSport"
+                ).textContent =
+                    profile.favourite_sport
+                        ? `🏅 ${profile.favourite_sport}`
+                        : "🏅 Sports";
+
+
+                document.getElementById(
+                    "profileBio"
+                ).textContent =
+                    profile.bio?.trim()
+                        ? profile.bio
+                        : "No bio yet.";
+
+
+                document.getElementById(
+                    "avatar"
+                ).textContent =
+                    getInitials(
+                        firstName,
+                        lastName
+                    );
+
+
+                /* ================= AVATAR IMAGE ================= */
+
+                if (profile.avatar_url) {
+
+                    const avatar =
+                        document.getElementById(
+                            "avatar"
+                        );
+
+                    avatar.style.backgroundImage =
+                        `url("${profile.avatar_url}")`;
+
+                    avatar.style.backgroundSize =
+                        "cover";
+
+                    avatar.style.backgroundPosition =
+                        "center";
+
+                    avatar.textContent = "";
+
+                }
+
+
+                /* ================= OWN PROFILE ================= */
+
+                if (
+                    profileUserId !== currentUser.id
+                ) {
+
+                    document.getElementById(
+                        "editContainer"
+                    ).style.display = "none";
+
+                }
+
+
+                /* ================= POSTS ================= */
+
+                await loadUserPosts(profileUserId);
+
+
+                /* ================= COMMUNITIES ================= */
+
+                await loadCommunityCount(
+                    profileUserId
+                );
+
+
+                /* ================= DISPLAY ================= */
+
+                document.getElementById(
+                    "loading"
+                ).style.display = "none";
+
+                document.getElementById(
+                    "profileContainer"
+                ).style.display = "block";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Profile error:",
+                    error
+                );
+
+                document.getElementById(
+                    "loading"
+                ).textContent =
+                    "Unable to load profile.";
+
+            }
+
+        }
+
+
+        /* ================= LOAD USER POSTS ================= */
+
+        async function loadUserPosts(userId) {
+
+            const {
+                data: posts,
+                error
+            } =
+                await supabaseClient
+                    .from("posts")
+                    .select(`
+                        id,
+                        content,
+                        created_at,
+                        community_id
+                    `)
+                    .eq("user_id", userId)
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    )
+                    .limit(10);
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            document.getElementById(
+                "postCount"
+            ).textContent =
+                posts.length;
+
+
+            if (!posts.length) {
+
+                document.getElementById(
+                    "postsContainer"
+                ).innerHTML =
+                    `<div class="empty">
+                        No posts yet.
+                    </div>`;
+
+                document.getElementById(
+                    "likeCount"
+                ).textContent = "0";
+
+                return;
+            }
+
+
+            /* ================= COMMUNITY NAMES ================= */
+
+            const communityIds =
+                [
+                    ...new Set(
+                        posts.map(
+                            post =>
+                                post.community_id
+                        )
+                    )
+                ];
+
+
+            let communityMap = {};
+
+
+            if (communityIds.length) {
+
+                const {
+                    data: communities,
+                    error: communityError
+                } =
+                    await supabaseClient
+                        .from("communities")
+                        .select(
+                            "id, name"
+                        )
+                        .in(
+                            "id",
+                            communityIds
+                        );
+
+
+                if (communityError) {
+                    throw communityError;
+                }
+
+
+                communities.forEach(
+                    community => {
+
+                        communityMap[
+                            community.id
+                        ] =
+                            community.name;
+
+                    }
+                );
+
+            }
+
+
+            /* ================= LIKES ================= */
+
+            const postIds =
+                posts.map(
+                    post => post.id
+                );
+
+
+            let totalLikes = 0;
+
+
+            if (postIds.length) {
+
+                const {
+                    data: likes,
+                    error: likesError
+                } =
+                    await supabaseClient
+                        .from("post_likes")
+                        .select("post_id")
+                        .in(
+                            "post_id",
+                            postIds
+                        );
+
+
+                if (likesError) {
+                    throw likesError;
+                }
+
+
+                totalLikes =
+                    likes.length;
+
+            }
+
+
+            document.getElementById(
+                "likeCount"
+            ).textContent =
+                totalLikes;
+
+
+            /* ================= RENDER ================= */
+
+            document.getElementById(
+                "postsContainer"
+            ).innerHTML = posts.map(
+                post => {
+
+                    const communityName =
+                        communityMap[
+                            post.community_id
+                        ] ||
+                        "Community";
+
+
+                    const date =
+                        new Date(
+                            post.created_at
+                        ).toLocaleDateString(
+                            undefined,
+                            {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric"
+                            }
+                        );
+
+
+                    return `
+                        <div class="post-card">
+
+                            <div class="post-meta">
+                                ${escapeHTML(communityName)}
+                                • ${date}
+                            </div>
+
+                            <div class="post-content">
+                                ${escapeHTML(post.content)}
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            ).join("");
+
+        }
+
+
+        /* ================= COMMUNITY COUNT ================= */
+
+        async function loadCommunityCount(userId) {
+
+            const {
+                count,
+                error
+            } =
+                await supabaseClient
+                    .from("community_members")
+                    .select(
+                        "*",
+                        {
+                            count: "exact",
+                            head: true
+                        }
+                    )
+                    .eq(
+                        "user_id",
+                        userId
+                    );
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            document.getElementById(
+                "communityCount"
+            ).textContent =
+                count || 0;
+
+        }
+
+
+        /* ================= START ================= */
+
+        loadProfile();
+
+    </script>
+
+</body>
+</html>
