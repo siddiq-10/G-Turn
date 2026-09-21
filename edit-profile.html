@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Profile | PlaySphere</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #080a0b;
+
+            color: white;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+            background:
+                rgba(8,10,11,0.95);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+
+        .logo {
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
+
+            color: #c6ff00;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 24px;
+        }
+
+
+        .nav-links a {
+
+            color: #aaa;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color: #c6ff00;
+        }
+
+
+        /* ================= PAGE ================= */
+
+        .container {
+
+            width: min(700px, 92%);
+
+            margin: 45px auto;
+        }
+
+
+        .page-title {
+
+            font-size: 30px;
+
+            font-weight: 900;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-subtitle {
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .edit-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.06),
+                    rgba(255,255,255,0.025)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 20px;
+
+            padding: 30px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 22px;
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 16px;
+        }
+
+
+        label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #ccc;
+
+            margin-bottom: 8px;
+        }
+
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            background: #0b0d0e;
+
+            color: white;
+
+            border-radius: 10px;
+
+            padding: 12px 14px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: #c6ff00;
+
+            box-shadow:
+                0 0 0 2px rgba(198,255,0,0.08);
+        }
+
+
+        select {
+
+            cursor: pointer;
+        }
+
+
+        select option {
+
+            background: #111;
+
+            color: white;
+        }
+
+
+        textarea {
+
+            min-height: 130px;
+
+            resize: vertical;
+
+            line-height: 1.5;
+        }
+
+
+        .bio-footer {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 6px;
+
+            color: #666;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-top: 30px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+
+        button {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 12px 20px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .cancel-btn {
+
+            background:
+                rgba(255,255,255,0.06);
+
+            color: #ccc;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+
+        .cancel-btn:hover {
+
+            background:
+                rgba(255,255,255,0.1);
+
+            color: white;
+        }
+
+
+        .save-btn {
+
+            background: #c6ff00;
+
+            color: #111;
+
+            min-width: 125px;
+        }
+
+
+        .save-btn:hover {
+
+            transform: translateY(-2px);
+        }
+
+
+        .save-btn:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+
+            display: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .message.success {
+
+            display: block;
+
+            background:
+                rgba(198,255,0,0.08);
+
+            border:
+                1px solid rgba(198,255,0,0.2);
+
+            color: #c6ff00;
+        }
+
+
+        .message.error {
+
+            display: block;
+
+            background:
+                rgba(255,92,122,0.08);
+
+            border:
+                1px solid rgba(255,92,122,0.2);
+
+            color: #ff7d96;
+        }
+
+
+        /* ================= LOADING ================= */
+
+        .loading {
+
+            text-align: center;
+
+            color: #777;
+
+            padding: 60px 0;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding: 0 5%;
+            }
+
+
+            .nav-links {
+
+                gap: 12px;
+            }
+
+
+            .nav-links a {
+
+                font-size: 12px;
+            }
+
+
+            .container {
+
+                width: 94%;
+
+                margin: 30px auto;
+            }
+
+
+            .edit-card {
+
+                padding: 22px;
+            }
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+
+                gap: 0;
+            }
+
+
+            .page-title {
+
+                font-size: 25px;
+            }
+
+
+            .buttons {
+
+                flex-direction: column-reverse;
+            }
+
+
+            button {
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PlaySphere
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Home
+            </a>
+
+            <a href="communities.html">
+                Communities
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <h1 class="page-title">
+            Edit Profile
+        </h1>
+
+        <p class="page-subtitle">
+            Update your PlaySphere profile information.
+        </p>
+
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Loading profile...
+        </div>
+
+
+        <section
+            id="editCard"
+            class="edit-card"
+            style="display:none;"
+        >
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+            <!-- FORM -->
+
+            <form
+                id="profileForm"
+            >
+
+
+                <!-- NAME -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            maxlength="50"
+                            placeholder="Enter your first name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            maxlength="50"
+                            placeholder="Enter your last name"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- SPORT -->
+
+                <div class="form-group">
+
+                    <label for="favouriteSport">
+                        Favourite Sport
+                    </label>
+
+                    <select
+                        id="favouriteSport"
+                        required
+                    >
+
+                        <option value="">
+                            Select your favourite sport
+                        </option>
+
+                        <option value="Football">
+                            ⚽ Football
+                        </option>
+
+                        <option value="Cricket">
+                            🏏 Cricket
+                        </option>
+
+                        <option value="Basketball">
+                            🏀 Basketball
+                        </option>
+
+                        <option value="Tennis">
+                            🎾 Tennis
+                        </option>
+
+                        <option value="Badminton">
+                            🏸 Badminton
+                        </option>
+
+                        <option value="Volleyball">
+                            🏐 Volleyball
+                        </option>
+
+                        <option value="Athletics">
+                            🏃 Athletics
+                        </option>
+
+                        <option value="Swimming">
+                            🏊 Swimming
+                        </option>
+
+                        <option value="Other">
+                            🏅 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BIO -->
+
+                <div class="form-group">
+
+                    <label for="bio">
+                        Bio
+                    </label>
+
+                    <textarea
+                        id="bio"
+                        maxlength="250"
+                        placeholder="Tell the PlaySphere community a little about yourself..."
+                    ></textarea>
+
+
+                    <div class="bio-footer">
+
+                        <span id="bioCount">
+                            0 / 250
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="goBack()"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                        id="saveButton"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= SUPABASE ================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="config.js"></script>
+
+
+    <script>
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        let currentUser = null;
+
+
+        /* ================= MESSAGE ================= */
+
+        function showMessage(
+            message,
+            type
+        ) {
+
+            const element =
+                document.getElementById(
+                    "message"
+                );
+
+
+            element.textContent =
+                message;
+
+
+            element.className =
+                `message ${type}`;
+
+        }
+
+
+        /* ================= LOAD PROFILE ================= */
+
+        async function loadProfile() {
+
+            try {
+
+                const {
+                    data: {
+                        user
+                    }
+                } =
+                    await supabaseClient
+                        .auth
+                        .getUser();
+
+
+                if (!user) {
+
+                    window.location.href =
+                        "index.html";
+
+                    return;
+                }
+
+
+                currentUser = user;
+
+
+                const {
+                    data: profile,
+                    error
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select(`
+                            first_name,
+                            last_name,
+                            favourite_sport,
+                            bio
+                        `)
+                        .eq(
+                            "id",
+                            user.id
+                        )
+                        .single();
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                /* ================= FILL FORM ================= */
+
+                document.getElementById(
+                    "firstName"
+                ).value =
+                    profile.first_name || "";
+
+
+                document.getElementById(
+                    "lastName"
+                ).value =
+                    profile.last_name || "";
+
+
+                document.getElementById(
+                    "favouriteSport"
+                ).value =
+                    profile.favourite_sport || "";
+
+
+                document.getElementById(
+                    "bio"
+                ).value =
+                    profile.bio || "";
+
+
+                updateBioCount();
+
+
+                /* ================= SHOW ================= */
+
+                document.getElementById(
+                    "loading"
+                ).style.display =
+                    "none";
+
+
+                document.getElementById(
+                    "editCard"
+                ).style.display =
+                    "block";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Load profile error:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "loading"
+                ).textContent =
+                    "Unable to load your profile.";
+
+            }
+
+        }
+
+
+        /* ================= BIO COUNTER ================= */
+
+        function updateBioCount() {
+
+            const bio =
+                document.getElementById(
+                    "bio"
+                ).value;
+
+
+            document.getElementById(
+                "bioCount"
+            ).textContent =
+                `${bio.length} / 250`;
+
+        }
+
+
+        document.getElementById(
+            "bio"
+        ).addEventListener(
+            "input",
+            updateBioCount
+        );
+
+
+        /* ================= SAVE ================= */
+
+        document.getElementById(
+            "profileForm"
+        ).addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const firstName =
+                    document.getElementById(
+                        "firstName"
+                    ).value.trim();
+
+
+                const lastName =
+                    document.getElementById(
+                        "lastName"
+                    ).value.trim();
+
+
+                const favouriteSport =
+                    document.getElementById(
+                        "favouriteSport"
+                    ).value;
+
+
+                const bio =
+                    document.getElementById(
+                        "bio"
+                    ).value.trim();
+
+
+                if (!firstName) {
+
+                    showMessage(
+                        "Please enter your first name.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                if (!favouriteSport) {
+
+                    showMessage(
+                        "Please select your favourite sport.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                const saveButton =
+                    document.getElementById(
+                        "saveButton"
+                    );
+
+
+                saveButton.disabled =
+                    true;
+
+                saveButton.textContent =
+                    "Saving...";
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .from("profiles")
+                            .update({
+
+                                first_name:
+                                    firstName,
+
+                                last_name:
+                                    lastName,
+
+                                favourite_sport:
+                                    favouriteSport,
+
+                                bio:
+                                    bio,
+
+                                updated_at:
+                                    new Date().toISOString()
+
+                            })
+                            .eq(
+                                "id",
+                                currentUser.id
+                            );
+
+
+                    if (error) {
+                        throw error;
+                    }
+
+
+                    showMessage(
+                        "Profile updated successfully! 🎉",
+                        "success"
+                    );
+
+
+                    /*
+                     * Give the user a moment
+                     * to see the success message.
+                     */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "profile.html";
+
+                        },
+                        900
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Update profile error:",
+                        error
+                    );
+
+
+                    showMessage(
+                        "Unable to save your profile. Please try again.",
+                        "error"
+                    );
+
+
+                    saveButton.disabled =
+                        false;
+
+                    saveButton.textContent =
+                        "Save Changes";
+
+                }
+
+            }
+        );
+
+
+        /* ================= CANCEL ================= */
+
+        function goBack() {
+
+            window.location.href =
+                "profile.html";
+
+        }
+
+
+        /* ================= START ================= */
+
+        loadProfile();
+
+    </script>
+
+</body>
+
+</html>
