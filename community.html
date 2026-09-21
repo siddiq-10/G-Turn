@@ -923,6 +923,16 @@
         font-size: 13px;
         padding: 5px 0 10px;
     }
+    .post-author-link {
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.2s ease;
+    }
+
+    .post-author-link:hover {
+        color: #c6ff00;
+    }
 
     </style>
 
@@ -1722,7 +1732,12 @@
 
                                 <div>
                                     <div class="author-name">
+                                        <a 
+                                            href="profile.html?id=${encodeURIComponent(post.user_id)}"
+                                            class="author-name-link"
+                                        >
                                         ${escapeHTML(authorName)}
+                                        <a/>
                                     </div>
 
                                     <div class="post-time">
