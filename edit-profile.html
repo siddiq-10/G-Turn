@@ -1041,6 +1041,34 @@ document.getElementById(
             }
 
         }
+        currentAvatarUrl =
+    profile.avatar_url || "";
+
+
+const avatarPreview =
+    document.getElementById(
+        "avatarPreview"
+    );
+
+
+if (currentAvatarUrl) {
+
+    avatarPreview.style.backgroundImage =
+        `url("${currentAvatarUrl}")`;
+
+    avatarPreview.textContent = "";
+
+} else {
+
+    const firstName =
+        profile.first_name || "";
+
+    avatarPreview.textContent =
+        firstName
+            ? firstName.charAt(0).toUpperCase()
+            : "P";
+
+}
 
 
         /* ================= BIO COUNTER ================= */
