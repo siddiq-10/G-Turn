@@ -1201,6 +1201,84 @@ if (currentAvatarUrl) {
                     if (error) {
                         throw error;
                     }
+                    /* ================= UPLOAD AVATAR ================= */
+
+let avatarUrl =
+    currentAvatarUrl;
+
+
+if (selectedAvatarFile) {
+
+    const fileExtension =
+        selectedAvatarFile.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+    const filePath =
+        `${currentUser.id}.${fileExtension}`;
+
+
+    const {
+        error: uploadError
+    } =
+        await supabaseClient
+            .storage
+            .from("avatars")
+            .upload(
+                filePath,
+                selectedAvatarFile,
+                {
+                    upsert: true,
+                    contentType:
+                        selectedAvatarFile.type
+                }
+            );
+
+
+    if (uploadError) {
+        throw uploadError;
+    }
+
+
+    const {
+        data: publicUrlData
+    } =
+        supabaseClient
+            .storage
+            .from("avatars")
+            .getPublicUrl(
+                filePath
+            );
+
+
+    avatarUrl =
+        publicUrlData.publicUrl;
+
+
+    /* Save URL in profile */
+
+    const {
+        error: avatarUpdateError
+    } =
+        await supabaseClient
+            .from("profiles")
+            .update({
+                avatar_url: avatarUrl
+            })
+            .eq(
+                "id",
+                currentUser.id
+            );
+
+
+    if (avatarUpdateError) {
+        throw avatarUpdateError;
+    }
+
+}
+
 
 
                     showMessage(
