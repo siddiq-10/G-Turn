@@ -461,6 +461,71 @@
 
         }
 
+        /* ================= AVATAR UPLOAD ================= */
+
+.avatar-upload {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 8px;
+}
+
+.avatar-preview {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+
+    border-radius: 50%;
+
+    background: #c6ff00;
+    color: #111;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    font-weight: 900;
+
+    background-size: cover;
+    background-position: center;
+
+    border: 3px solid rgba(198,255,0,0.15);
+}
+
+.avatar-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.choose-avatar-btn {
+    width: fit-content;
+
+    background: rgba(255,255,255,0.07);
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    border-radius: 9px;
+
+    padding: 9px 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.choose-avatar-btn:hover {
+    border-color: #c6ff00;
+    color: #c6ff00;
+}
+
+.avatar-hint {
+    color: #666;
+    font-size: 11px;
+}
+
     </style>
 
 </head>
@@ -755,6 +820,91 @@
 
 
         let currentUser = null;
+        let selectedAvatarFile=null;
+        let currentAvatarUrl=null;
+        /* ================= AVATAR SELECTION ================= */
+
+document.getElementById(
+    "avatarInput"
+).addEventListener(
+    "change",
+    function(event) {
+
+        const file =
+            event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        /* File size: 2 MB */
+
+        if (file.size > 2 * 1024 * 1024) {
+
+            showMessage(
+                "Profile picture must be smaller than 2 MB.",
+                "error"
+            );
+
+            event.target.value = "";
+
+            return;
+        }
+
+
+        /* File type */
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+
+        if (!allowedTypes.includes(file.type)) {
+
+            showMessage(
+                "Please choose a JPG, PNG or WebP image.",
+                "error"
+            );
+
+            event.target.value = "";
+
+            return;
+        }
+
+
+        selectedAvatarFile = file;
+
+
+        /* Preview */
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e) {
+
+                const preview =
+                    document.getElementById(
+                        "avatarPreview"
+                    );
+
+
+                preview.style.backgroundImage =
+                    `url("${e.target.result}")`;
+
+                preview.textContent = "";
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
 
 
         /* ================= MESSAGE ================= */
