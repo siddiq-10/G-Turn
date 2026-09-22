@@ -538,6 +538,49 @@
             <form
                 id="profileForm"
             >
+            <!-- ================= PROFILE PICTURE ================= -->
+
+<div class="form-group">
+
+    <label>
+        Profile Picture
+    </label>
+
+    <div class="avatar-upload">
+
+        <div
+            id="avatarPreview"
+            class="avatar-preview"
+        >
+            P
+        </div>
+
+        <div class="avatar-controls">
+
+            <input
+                type="file"
+                id="avatarInput"
+                accept="image/png,image/jpeg,image/webp"
+                hidden
+            >
+
+            <button
+                type="button"
+                class="choose-avatar-btn"
+                onclick="document.getElementById('avatarInput').click()"
+            >
+                Choose Picture
+            </button>
+
+            <div class="avatar-hint">
+                JPG, PNG or WebP • Max 2 MB
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
                 <!-- NAME -->
