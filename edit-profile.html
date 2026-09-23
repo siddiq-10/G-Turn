@@ -5,16 +5,12 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Edit Profile | PlaySphere</title>
 
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -49,10 +45,10 @@
             padding: 0 7%;
 
             border-bottom:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
 
             background:
-                rgba(8,10,11,0.95);
+                rgba(8, 10, 11, 0.95);
 
             position: sticky;
 
@@ -137,14 +133,12 @@
         .edit-card {
 
             background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,0.06),
-                    rgba(255,255,255,0.025)
-                );
+                linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.06),
+                    rgba(255, 255, 255, 0.025));
 
             border:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
 
             border-radius: 20px;
 
@@ -191,7 +185,7 @@
             width: 100%;
 
             border:
-                1px solid rgba(255,255,255,0.1);
+                1px solid rgba(255, 255, 255, 0.1);
 
             background: #0b0d0e;
 
@@ -218,7 +212,7 @@
             border-color: #c6ff00;
 
             box-shadow:
-                0 0 0 2px rgba(198,255,0,0.08);
+                0 0 0 2px rgba(198, 255, 0, 0.08);
         }
 
 
@@ -275,7 +269,7 @@
             padding-top: 22px;
 
             border-top:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
         }
 
 
@@ -298,19 +292,19 @@
         .cancel-btn {
 
             background:
-                rgba(255,255,255,0.06);
+                rgba(255, 255, 255, 0.06);
 
             color: #ccc;
 
             border:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
         }
 
 
         .cancel-btn:hover {
 
             background:
-                rgba(255,255,255,0.1);
+                rgba(255, 255, 255, 0.1);
 
             color: white;
         }
@@ -363,10 +357,10 @@
             display: block;
 
             background:
-                rgba(198,255,0,0.08);
+                rgba(198, 255, 0, 0.08);
 
             border:
-                1px solid rgba(198,255,0,0.2);
+                1px solid rgba(198, 255, 0, 0.2);
 
             color: #c6ff00;
         }
@@ -377,10 +371,10 @@
             display: block;
 
             background:
-                rgba(255,92,122,0.08);
+                rgba(255, 92, 122, 0.08);
 
             border:
-                1px solid rgba(255,92,122,0.2);
+                1px solid rgba(255, 92, 122, 0.2);
 
             color: #ff7d96;
         }
@@ -463,69 +457,68 @@
 
         /* ================= AVATAR UPLOAD ================= */
 
-.avatar-upload {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-top: 8px;
-}
+        .avatar-upload {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-top: 8px;
+        }
 
-.avatar-preview {
-    width: 80px;
-    height: 80px;
-    min-width: 80px;
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
 
-    border-radius: 50%;
+            border-radius: 50%;
 
-    background: #c6ff00;
-    color: #111;
+            background: #c6ff00;
+            color: #111;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    font-size: 28px;
-    font-weight: 900;
+            font-size: 28px;
+            font-weight: 900;
 
-    background-size: cover;
-    background-position: center;
+            background-size: cover;
+            background-position: center;
 
-    border: 3px solid rgba(198,255,0,0.15);
-}
+            border: 3px solid rgba(198, 255, 0, 0.15);
+        }
 
-.avatar-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
+        .avatar-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
 
-.choose-avatar-btn {
-    width: fit-content;
+        .choose-avatar-btn {
+            width: fit-content;
 
-    background: rgba(255,255,255,0.07);
-    color: white;
+            background: rgba(255, 255, 255, 0.07);
+            color: white;
 
-    border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(255, 255, 255, 0.12);
 
-    border-radius: 9px;
+            border-radius: 9px;
 
-    padding: 9px 14px;
+            padding: 9px 14px;
 
-    font-weight: 700;
+            font-weight: 700;
 
-    cursor: pointer;
-}
+            cursor: pointer;
+        }
 
-.choose-avatar-btn:hover {
-    border-color: #c6ff00;
-    color: #c6ff00;
-}
+        .choose-avatar-btn:hover {
+            border-color: #c6ff00;
+            color: #c6ff00;
+        }
 
-.avatar-hint {
-    color: #666;
-    font-size: 11px;
-}
-
+        .avatar-hint {
+            color: #666;
+            font-size: 11px;
+        }
     </style>
 
 </head>
@@ -575,77 +568,54 @@
         </p>
 
 
-        <div
-            id="loading"
-            class="loading"
-        >
+        <div id="loading" class="loading">
             Loading profile...
         </div>
 
 
-        <section
-            id="editCard"
-            class="edit-card"
-            style="display:none;"
-        >
+        <section id="editCard" class="edit-card" style="display:none;">
 
 
             <!-- MESSAGE -->
 
-            <div
-                id="message"
-                class="message"
-            ></div>
+            <div id="message" class="message"></div>
 
 
             <!-- FORM -->
 
-            <form
-                id="profileForm"
-            >
-            <!-- ================= PROFILE PICTURE ================= -->
+            <form id="profileForm">
+                <!-- ================= PROFILE PICTURE ================= -->
 
-<div class="form-group">
+                <div class="form-group">
 
-    <label>
-        Profile Picture
-    </label>
+                    <label>
+                        Profile Picture
+                    </label>
 
-    <div class="avatar-upload">
+                    <div class="avatar-upload">
 
-        <div
-            id="avatarPreview"
-            class="avatar-preview"
-        >
-            P
-        </div>
+                        <div id="avatarPreview" class="avatar-preview">
+                            P
+                        </div>
 
-        <div class="avatar-controls">
+                        <div class="avatar-controls">
 
-            <input
-                type="file"
-                id="avatarInput"
-                accept="image/png,image/jpeg,image/webp"
-                hidden
-            >
+                            <input type="file" id="avatarInput" accept="image/png,image/jpeg,image/webp" hidden>
 
-            <button
-                type="button"
-                class="choose-avatar-btn"
-                onclick="document.getElementById('avatarInput').click()"
-            >
-                Choose Picture
-            </button>
+                            <button type="button" class="choose-avatar-btn"
+                                onclick="document.getElementById('avatarInput').click()">
+                                Choose Picture
+                            </button>
 
-            <div class="avatar-hint">
-                JPG, PNG or WebP • Max 2 MB
-            </div>
+                            <div class="avatar-hint">
+                                JPG, PNG or WebP • Max 2 MB
+                            </div>
 
-        </div>
+                        </div>
 
-    </div>
+                    </div>
 
-</div>
+                </div>
 
 
                 <!-- NAME -->
@@ -659,13 +629,7 @@
                             First Name
                         </label>
 
-                        <input
-                            type="text"
-                            id="firstName"
-                            maxlength="50"
-                            placeholder="Enter your first name"
-                            required
-                        >
+                        <input type="text" id="firstName" maxlength="50" placeholder="Enter your first name" required>
 
                     </div>
 
@@ -676,12 +640,7 @@
                             Last Name
                         </label>
 
-                        <input
-                            type="text"
-                            id="lastName"
-                            maxlength="50"
-                            placeholder="Enter your last name"
-                        >
+                        <input type="text" id="lastName" maxlength="50" placeholder="Enter your last name">
 
                     </div>
 
@@ -696,10 +655,7 @@
                         Favourite Sport
                     </label>
 
-                    <select
-                        id="favouriteSport"
-                        required
-                    >
+                    <select id="favouriteSport" required>
 
                         <option value="">
                             Select your favourite sport
@@ -754,11 +710,8 @@
                         Bio
                     </label>
 
-                    <textarea
-                        id="bio"
-                        maxlength="250"
-                        placeholder="Tell the PlaySphere community a little about yourself..."
-                    ></textarea>
+                    <textarea id="bio" maxlength="250"
+                        placeholder="Tell the PlaySphere community a little about yourself..."></textarea>
 
 
                     <div class="bio-footer">
@@ -776,20 +729,12 @@
 
                 <div class="buttons">
 
-                    <button
-                        type="button"
-                        class="cancel-btn"
-                        onclick="goBack()"
-                    >
+                    <button type="button" class="cancel-btn" onclick="goBack()">
                         Cancel
                     </button>
 
 
-                    <button
-                        type="submit"
-                        class="save-btn"
-                        id="saveButton"
-                    >
+                    <button type="submit" class="save-btn" id="saveButton">
                         Save Changes
                     </button>
 
@@ -820,91 +765,91 @@
 
 
         let currentUser = null;
-        let selectedAvatarFile=null;
-        let currentAvatarUrl=null;
+        let selectedAvatarFile = null;
+        let currentAvatarUrl = null;
         /* ================= AVATAR SELECTION ================= */
 
-document.getElementById(
-    "avatarInput"
-).addEventListener(
-    "change",
-    function(event) {
+        document.getElementById(
+            "avatarInput"
+        ).addEventListener(
+            "change",
+            function (event) {
 
-        const file =
-            event.target.files[0];
+                const file =
+                    event.target.files[0];
 
-        if (!file) {
-            return;
-        }
-
-
-        /* File size: 2 MB */
-
-        if (file.size > 2 * 1024 * 1024) {
-
-            showMessage(
-                "Profile picture must be smaller than 2 MB.",
-                "error"
-            );
-
-            event.target.value = "";
-
-            return;
-        }
+                if (!file) {
+                    return;
+                }
 
 
-        /* File type */
+                /* File size: 2 MB */
 
-        const allowedTypes = [
-            "image/jpeg",
-            "image/png",
-            "image/webp"
-        ];
+                if (file.size > 2 * 1024 * 1024) {
 
-
-        if (!allowedTypes.includes(file.type)) {
-
-            showMessage(
-                "Please choose a JPG, PNG or WebP image.",
-                "error"
-            );
-
-            event.target.value = "";
-
-            return;
-        }
-
-
-        selectedAvatarFile = file;
-
-
-        /* Preview */
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(e) {
-
-                const preview =
-                    document.getElementById(
-                        "avatarPreview"
+                    showMessage(
+                        "Profile picture must be smaller than 2 MB.",
+                        "error"
                     );
 
+                    event.target.value = "";
 
-                preview.style.backgroundImage =
-                    `url("${e.target.result}")`;
-
-                preview.textContent = "";
-
-            };
+                    return;
+                }
 
 
-        reader.readAsDataURL(file);
+                /* File type */
 
-    }
-);
+                const allowedTypes = [
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp"
+                ];
+
+
+                if (!allowedTypes.includes(file.type)) {
+
+                    showMessage(
+                        "Please choose a JPG, PNG or WebP image.",
+                        "error"
+                    );
+
+                    event.target.value = "";
+
+                    return;
+                }
+
+
+                selectedAvatarFile = file;
+
+
+                /* Preview */
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (e) {
+
+                        const preview =
+                            document.getElementById(
+                                "avatarPreview"
+                            );
+
+
+                        preview.style.backgroundImage =
+                            `url("${e.target.result}")`;
+
+                        preview.textContent = "";
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
 
 
         /* ================= MESSAGE ================= */
@@ -968,7 +913,8 @@ document.getElementById(
                             first_name,
                             last_name,
                             favourite_sport,
-                            bio
+                            bio,
+                            avatar_url
                         `)
                         .eq(
                             "id",
@@ -1008,6 +954,38 @@ document.getElementById(
                     profile.bio || "";
 
 
+                /* ================= CURRENT AVATAR ================= */
+
+                currentAvatarUrl =
+                    profile.avatar_url || "";
+
+
+                const avatarPreview =
+                    document.getElementById(
+                        "avatarPreview"
+                    );
+
+
+                if (currentAvatarUrl) {
+
+                    avatarPreview.style.backgroundImage =
+                        `url("${currentAvatarUrl}")`;
+
+                    avatarPreview.textContent = "";
+
+                } else {
+
+                    const firstName =
+                        profile.first_name || "";
+
+                    avatarPreview.textContent =
+                        firstName
+                            ? firstName.charAt(0).toUpperCase()
+                            : "P";
+
+                }
+
+
                 updateBioCount();
 
 
@@ -1041,36 +1019,6 @@ document.getElementById(
             }
 
         }
-        currentAvatarUrl =
-    profile.avatar_url || "";
-
-
-const avatarPreview =
-    document.getElementById(
-        "avatarPreview"
-    );
-
-
-if (currentAvatarUrl) {
-
-    avatarPreview.style.backgroundImage =
-        `url("${currentAvatarUrl}")`;
-
-    avatarPreview.textContent = "";
-
-} else {
-
-    const firstName =
-        profile.first_name || "";
-
-    avatarPreview.textContent =
-        firstName
-            ? firstName.charAt(0).toUpperCase()
-            : "P";
-
-}
-
-
         /* ================= BIO COUNTER ================= */
 
         function updateBioCount() {
@@ -1103,7 +1051,7 @@ if (currentAvatarUrl) {
             "profileForm"
         ).addEventListener(
             "submit",
-            async function(event) {
+            async function (event) {
 
                 event.preventDefault();
 
@@ -1203,81 +1151,81 @@ if (currentAvatarUrl) {
                     }
                     /* ================= UPLOAD AVATAR ================= */
 
-let avatarUrl =
-    currentAvatarUrl;
+                    let avatarUrl =
+                        currentAvatarUrl;
 
 
-if (selectedAvatarFile) {
+                    if (selectedAvatarFile) {
 
-    const fileExtension =
-        selectedAvatarFile.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-    const filePath =
-        `${currentUser.id}.${fileExtension}`;
+                        const fileExtension =
+                            selectedAvatarFile.name
+                                .split(".")
+                                .pop()
+                                .toLowerCase();
 
 
-    const {
-        error: uploadError
-    } =
-        await supabaseClient
-            .storage
-            .from("avatars")
-            .upload(
-                filePath,
-                selectedAvatarFile,
-                {
-                    upsert: true,
-                    contentType:
-                        selectedAvatarFile.type
-                }
-            );
+                        const filePath =
+                            `${currentUser.id}.${fileExtension}`;
 
 
-    if (uploadError) {
-        throw uploadError;
-    }
+                        const {
+                            error: uploadError
+                        } =
+                            await supabaseClient
+                                .storage
+                                .from("avatars")
+                                .upload(
+                                    filePath,
+                                    selectedAvatarFile,
+                                    {
+                                        upsert: true,
+                                        contentType:
+                                            selectedAvatarFile.type
+                                    }
+                                );
 
 
-    const {
-        data: publicUrlData
-    } =
-        supabaseClient
-            .storage
-            .from("avatars")
-            .getPublicUrl(
-                filePath
-            );
+                        if (uploadError) {
+                            throw uploadError;
+                        }
 
 
-    avatarUrl =
-        publicUrlData.publicUrl;
+                        const {
+                            data: publicUrlData
+                        } =
+                            supabaseClient
+                                .storage
+                                .from("avatars")
+                                .getPublicUrl(
+                                    filePath
+                                );
 
 
-    /* Save URL in profile */
-
-    const {
-        error: avatarUpdateError
-    } =
-        await supabaseClient
-            .from("profiles")
-            .update({
-                avatar_url: avatarUrl
-            })
-            .eq(
-                "id",
-                currentUser.id
-            );
+                        avatarUrl =
+                            publicUrlData.publicUrl;
 
 
-    if (avatarUpdateError) {
-        throw avatarUpdateError;
-    }
+                        /* Save URL in profile */
 
-}
+                        const {
+                            error: avatarUpdateError
+                        } =
+                            await supabaseClient
+                                .from("profiles")
+                                .update({
+                                    avatar_url: avatarUrl
+                                })
+                                .eq(
+                                    "id",
+                                    currentUser.id
+                                );
+
+
+                        if (avatarUpdateError) {
+                            throw avatarUpdateError;
+                        }
+
+                    }
 
 
 
@@ -1293,7 +1241,7 @@ if (selectedAvatarFile) {
                      */
 
                     setTimeout(
-                        function() {
+                        function () {
 
                             window.location.href =
                                 "profile.html";
