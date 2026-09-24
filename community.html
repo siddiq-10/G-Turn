@@ -1177,7 +1177,7 @@
             currentUser = user;
 
 
-            loadUserInfo();
+            await loadUserInfo();
 
 
             const slug =
@@ -1203,29 +1203,33 @@
            USER INFO
         ========================== */
 
-        function loadUserInfo() {
+        async function loadUserInfo() {
 
-            const metadata =
-                currentUser.user_metadata || {};
+            const metadata = currentUser.user_metadata || {};
+            const firstName = metadata.first_name || "Player";
 
+            document.getElementById("navUserName").textContent = firstName;
 
-            const firstName =
-                metadata.first_name ||
-                "Player";
+            const navAvatar = document.getElementById("navAvatar");
+            const { data: profile, error } = await supabaseClient
+                .from("profiles")
+                .select("avatar_url")
+                .eq("id", currentUser.id)
+                .maybeSingle();
 
+            if (error) console.error("Error loading nav avatar:", error);
 
-            document.getElementById(
-                "navUserName"
-            ).textContent =
-                firstName;
-
-
-            document.getElementById(
-                "navAvatar"
-            ).textContent =
-                firstName
-                    .charAt(0)
-                    .toUpperCase();
+            if (profile?.avatar_url) {
+                navAvatar.style.backgroundImage = `url("${profile.avatar_url}")`;
+                navAvatar.style.backgroundSize = "cover";
+                navAvatar.style.backgroundPosition = "center";
+                navAvatar.style.color = "transparent";
+                navAvatar.textContent = "";
+            } else {
+                navAvatar.style.backgroundImage = "";
+                navAvatar.style.color = "#080a0d";
+                navAvatar.textContent = firstName.charAt(0).toUpperCase();
+            }
 
         }
 
@@ -1627,7 +1631,7 @@
                 const { data: profilesData, error: profilesError } =
                     await supabaseClient
                         .from("profiles")
-                        .select("id, first_name, last_name, favourite_sport")
+                        .select("id, first_name, last_name, favourite_sport, avatar_url")
                         .in("id", userIds);
 
                 if (profilesError) {
@@ -1644,7 +1648,8 @@
 
                 profileMap[profile.id] = {
                     name: fullName || "Player",
-                    favouriteSport: profile.favourite_sport || ""
+                    favouriteSport: profile.favourite_sport || "",
+                    avatarUrl: profile.avatar_url || ""
                 };
             });
 
@@ -1698,6 +1703,7 @@
                 ...post,
                 authorName: profileMap[post.user_id]?.name || "Player",
                 favouriteSport: profileMap[post.user_id]?.favouriteSport || "",
+                avatarUrl: profileMap[post.user_id]?.avatarUrl || "",
                 likeCount: likeCounts[post.id] || 0,
                 liked: likedByUser.has(post.id),
                 commentCount: commentCounts[post.id] || 0
@@ -1720,14 +1726,15 @@
                 const isOwner = post.user_id === currentUser.id;
                 const authorName = post.authorName || "Player";
                 const initial = authorName.charAt(0).toUpperCase();
+                const avatarUrl = post.avatarUrl || "";
 
                 return `
                     <article class="post">
 
                         <div class="post-top">
                             <div class="author">
-                                <div class="author-avatar">
-                                    ${escapeHTML(initial)}
+                                <div class="author-avatar" ${avatarUrl ? `style="background-image: url('${escapeHTML(avatarUrl)}'); background-size: cover; background-position: center; color: transparent;"` : ""}>
+                                    ${avatarUrl ? "" : escapeHTML(initial)}
                                 </div>
 
                                 <div>
@@ -1737,7 +1744,7 @@
                                             class="author-name-link"
                                         >
                                         ${escapeHTML(authorName)}
-                                        <a/>
+                                        </a>
                                     </div>
 
                                     <div class="post-time">
@@ -2129,7 +2136,7 @@ async function loadComments(postId) {
         const { data: profilesData, error: profilesError } =
             await supabaseClient
                 .from("profiles")
-                .select("id, first_name, last_name")
+                .select("id, first_name, last_name, avatar_url")
                 .in("id", userIds);
 
         if (profilesError) {
@@ -2144,7 +2151,10 @@ async function loadComments(postId) {
         const fullName =
             `${profile.first_name || ""} ${profile.last_name || ""}`.trim();
 
-        profileMap[profile.id] = fullName || "Player";
+        profileMap[profile.id] = {
+            name: fullName || "Player",
+            avatarUrl: profile.avatar_url || ""
+        };
     });
 
     let commentsHTML = "";
@@ -2159,13 +2169,15 @@ async function loadComments(postId) {
         commentsHTML = commentsList.map(comment => {
 
             const isOwner = comment.user_id === currentUser.id;
-            const authorName = profileMap[comment.user_id] || "Player";
+            const commentProfile = profileMap[comment.user_id] || { name: "Player", avatarUrl: "" };
+            const authorName = commentProfile.name;
             const initial = authorName.charAt(0).toUpperCase();
+            const avatarUrl = commentProfile.avatarUrl;
 
             return `
                 <div class="comment-item">
-                    <div class="comment-avatar">
-                        ${escapeHTML(initial)}
+                    <div class="comment-avatar" ${avatarUrl ? `style="background-image: url('${escapeHTML(avatarUrl)}'); background-size: cover; background-position: center; color: transparent;"` : ""}>
+                        ${avatarUrl ? "" : escapeHTML(initial)}
                     </div>
 
                     <div class="comment-body">
