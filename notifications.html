@@ -500,7 +500,7 @@
                 return;
             }
 
-            const ids = [
+            const actorIds = [
                 ...new Set(
                     notifications
                         .map((notification) => notification.actor_id)
@@ -508,13 +508,21 @@
                 )
             ];
 
+            const postIds = [
+                ...new Set(
+                    notifications
+                        .map((notification) => notification.post_id)
+                        .filter(Boolean)
+                )
+            ];
+
             const profiles = {};
 
-            if (ids.length) {
+            if (actorIds.length) {
                 const { data, error: profileError } = await supabaseClient
                     .from("profiles")
                     .select("id, first_name, last_name, avatar_url")
-                    .in("id", ids);
+                    .in("id", actorIds);
 
                 if (!profileError) {
                     (data || []).forEach((profile) => {
@@ -530,11 +538,45 @@
                 }
             }
 
-            renderNotifications(notifications, profiles);
+            // Find which community each notification's post belongs to.
+            const postCommunityMap = {};
+
+            if (postIds.length) {
+                const { data: posts, error: postsError } = await supabaseClient
+                    .from("posts")
+                    .select("id, community_id")
+                    .in("id", postIds);
+
+                if (!postsError && posts?.length) {
+                    const communityIds = [
+                        ...new Set(posts.map((post) => post.community_id).filter(Boolean))
+                    ];
+
+                    const { data: communities, error: communitiesError } = await supabaseClient
+                        .from("communities")
+                        .select("id, slug")
+                        .in("id", communityIds);
+
+                    if (!communitiesError) {
+                        const communityMap = {};
+                        (communities || []).forEach((community) => {
+                            communityMap[community.id] = community.slug;
+                        });
+
+                        posts.forEach((post) => {
+                            if (communityMap[post.community_id]) {
+                                postCommunityMap[post.id] = communityMap[post.community_id];
+                            }
+                        });
+                    }
+                }
+            }
+
+            renderNotifications(notifications, profiles, postCommunityMap);
             updateMarkAllButton(notifications);
         }
 
-        function renderNotifications(list, profiles) {
+        function renderNotifications(list, profiles, postCommunityMap) {
             const container = document.getElementById("notificationsContainer");
 
             container.innerHTML = list
@@ -561,12 +603,21 @@
                         ? `style="background-image:url('${escapeHTML(profile.avatarUrl)}');background-size:cover;background-position:center;color:transparent"`
                         : "";
 
+                    const communitySlug = postCommunityMap[notification.post_id] || "";
+                    const targetUrl = communitySlug && notification.post_id
+                        ? `community.html?slug=${encodeURIComponent(communitySlug)}&post=${encodeURIComponent(notification.post_id)}`
+                        : "";
+
                     return `
                         <article
                             class="notification ${notification.read ? "" : "unread"}"
                             data-id="${escapeHTML(notification.id)}"
                             data-post-id="${escapeHTML(notification.post_id || "")}"
+                            data-community-slug="${escapeHTML(communitySlug)}"
+                            data-target-url="${escapeHTML(targetUrl)}"
                             data-read="${notification.read}"
+                            role="button"
+                            tabindex="0"
                         >
                             <div class="notification-avatar" ${style}>
                                 ${profile.avatarUrl ? "" : escapeHTML(initialOf(profile.name))}
@@ -660,6 +711,28 @@
                 : "All notifications read";
         }
 
+        async function openNotification(item) {
+            if (!item) {
+                return;
+            }
+
+            if (item.dataset.read !== "true") {
+                const marked = await markAsRead(item.dataset.id);
+
+                if (marked) {
+                    item.dataset.read = "true";
+                    item.classList.remove("unread");
+                    item.querySelector(".unread-label")?.remove();
+                }
+            }
+
+            const targetUrl = item.dataset.targetUrl;
+
+            if (targetUrl) {
+                window.location.href = targetUrl;
+            }
+        }
+
         document.addEventListener("click", async (event) => {
             const item = event.target.closest(".notification");
 
@@ -667,14 +740,22 @@
                 return;
             }
 
-            if (
-                item.dataset.read !== "true" &&
-                await markAsRead(item.dataset.id)
-            ) {
-                item.dataset.read = "true";
-                item.classList.remove("unread");
-                item.querySelector(".unread-label")?.remove();
+            await openNotification(item);
+        });
+
+        document.addEventListener("keydown", async (event) => {
+            if (event.key !== "Enter" && event.key !== " ") {
+                return;
             }
+
+            const item = event.target.closest(".notification");
+
+            if (!item) {
+                return;
+            }
+
+            event.preventDefault();
+            await openNotification(item);
         });
 
         document
