@@ -715,6 +715,24 @@
            RESPONSIVE
         ========================= */
 
+        .post.notification-target {
+            border-color: #c6ff00;
+            box-shadow: 0 0 0 2px rgba(198, 255, 0, 0.12), 0 0 28px rgba(198, 255, 0, 0.18);
+            animation: notificationPulse 1.2s ease-in-out 2;
+        }
+
+        @keyframes notificationPulse {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+
         @media (max-width: 650px) {
 
             .nav-links {
@@ -1144,6 +1162,22 @@
                 );
 
             return params.get("slug");
+
+        }
+
+
+        /* =========================
+           GET TARGET POST
+        ========================== */
+
+        function getTargetPostId() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            return params.get("post");
 
         }
 
@@ -1710,6 +1744,7 @@
             }));
 
             renderPosts(enrichedPosts);
+            focusTargetPost();
         }
 
 
@@ -1729,7 +1764,10 @@
                 const avatarUrl = post.avatarUrl || "";
 
                 return `
-                    <article class="post">
+                    <article
+                        class="post"
+                        id="post-${escapeHTML(post.id)}"
+                    >
 
                         <div class="post-top">
                             <div class="author">
@@ -1796,6 +1834,39 @@
                     </article>
                 `;
             }).join("");
+        }
+
+
+        /* =========================
+           FOCUS TARGET POST
+        ========================== */
+
+        function focusTargetPost() {
+
+            const targetPostId = getTargetPostId();
+
+            if (!targetPostId) {
+                return;
+            }
+
+            const target = document.getElementById(`post-${targetPostId}`);
+
+            if (!target) {
+                return;
+            }
+
+            target.classList.add("notification-target");
+
+            setTimeout(() => {
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }, 100);
+
+            setTimeout(() => {
+                target.classList.remove("notification-target");
+            }, 4000);
         }
 
 
