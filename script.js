@@ -854,6 +854,47 @@ function showNotification(message) {
         );
 
 }
+async function loadNotificationBadge() {
+    const badge = document.getElementById("notificationBadge");
+
+    if (!badge) return;
+
+    try {
+        const {
+            data: { user },
+            error: userError
+        } = await supabase.auth.getUser();
+
+        if (userError || !user) {
+            badge.style.display = "none";
+            return;
+        }
+
+        const { count, error } = await supabase
+            .from("notifications")
+            .select("*", { count: "exact", head: true })
+            .eq("recipient_id", user.id)
+            .eq("read", false);
+
+        if (error) {
+            console.error("Error loading notification count:", error);
+            badge.style.display = "none";
+            return;
+        }
+
+        if (count > 0) {
+            badge.textContent = count > 99 ? "99+" : count;
+            badge.style.display = "flex";
+        } else {
+            badge.textContent = "";
+            badge.style.display = "none";
+        }
+
+    } catch (error) {
+        console.error("Notification badge error:", error);
+        badge.style.display = "none";
+    }
+}
 
 
 
