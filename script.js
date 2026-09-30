@@ -991,11 +991,3 @@ async function loadNotificationBadge() {
 showLogin();
 
 loadNotificationBadge();
-
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-showLogin();
