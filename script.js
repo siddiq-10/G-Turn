@@ -854,47 +854,143 @@ function showNotification(message) {
         );
 
 }
-async function loadNotificationBadge() {
-    const badge = document.getElementById("notificationBadge");
 
+
+/* =========================================================
+   UNREAD NOTIFICATION BADGE
+========================================================= */
+
+async function loadNotificationBadge() {
+
+    const badge =
+        document.getElementById(
+            "notificationBadge"
+        );
+
+
+    // If this page does not have
+    // a notification badge, stop.
     if (!badge) return;
 
+
     try {
+
+        /*
+         * Get the currently logged-in user.
+         */
+
         const {
             data: { user },
             error: userError
-        } = await supabase.auth.getUser();
+        } =
+            await supabaseClient.auth.getUser();
+
 
         if (userError || !user) {
-            badge.style.display = "none";
+
+            badge.style.display =
+                "none";
+
             return;
+
         }
 
-        const { count, error } = await supabase
-            .from("notifications")
-            .select("*", { count: "exact", head: true })
-            .eq("recipient_id", user.id)
-            .eq("read", false);
+
+        /*
+         * Count unread notifications
+         * belonging to the current user.
+         */
+
+        const {
+            count,
+            error
+        } =
+            await supabaseClient
+                .from("notifications")
+                .select(
+                    "*",
+                    {
+                        count: "exact",
+                        head: true
+                    }
+                )
+                .eq(
+                    "recipient_id",
+                    user.id
+                )
+                .eq(
+                    "read",
+                    false
+                );
+
 
         if (error) {
-            console.error("Error loading notification count:", error);
-            badge.style.display = "none";
+
+            console.error(
+                "Error loading notification count:",
+                error
+            );
+
+            badge.style.display =
+                "none";
+
             return;
+
         }
+
+
+        /*
+         * Show the badge when
+         * unread notifications exist.
+         */
 
         if (count > 0) {
-            badge.textContent = count > 99 ? "99+" : count;
-            badge.style.display = "flex";
-        } else {
-            badge.textContent = "";
-            badge.style.display = "none";
+
+            badge.textContent =
+                count > 99
+                    ? "99+"
+                    : count;
+
+            badge.style.display =
+                "flex";
+
         }
 
-    } catch (error) {
-        console.error("Notification badge error:", error);
-        badge.style.display = "none";
+        else {
+
+            badge.textContent =
+                "";
+
+            badge.style.display =
+                "none";
+
+        }
+
+
     }
+
+    catch (error) {
+
+        console.error(
+            "Notification badge error:",
+            error
+        );
+
+        badge.style.display =
+            "none";
+
+    }
+
 }
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+showLogin();
+
+loadNotificationBadge();
 
 
 
