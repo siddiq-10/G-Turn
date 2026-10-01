@@ -989,5 +989,4 @@ async function loadNotificationBadge() {
 ========================================================= */
 
 showLogin();
-
 loadNotificationBadge();
